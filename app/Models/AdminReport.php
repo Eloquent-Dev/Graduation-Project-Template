@@ -9,9 +9,9 @@ class AdminReport extends Model
 
 protected $fillable = [
     'report_type',
-    'employee_id',
+    'generated_by',
 ];
     public function employee(){
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Employee::class, 'generated_by');
     }
 }

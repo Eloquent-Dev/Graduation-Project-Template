@@ -12,18 +12,18 @@ class CompletionReport extends Model
 
     protected $fillable =[
         'job_order_id',
-        'employee_id',
+        'reported_by',
         'supervisor_comments',
-        'completion_time_from',
-        'completion_time_to',
-        'image',
+        'started_at',
+        'completed_at',
+        'image_path',
     ];
 
     public function jobOrder(){
         return $this->belongsTo(JobOrder::class);
     }
 
-    public function employee(){
-        return $this->belongsTo(Employee::class);
+    public function reportedBy(){
+        return $this->belongsTo(Employee::class, 'reported_by');
     }
 }

@@ -15,13 +15,24 @@ class Complaint extends Model
     protected $fillable =[
         'title',
         'status',
+        'approved_at',
+        'approved_by',
+        'rejected_at',
+        'rejected_by',
+        'rejection_reason',
+        'resolved_at',
+        'resolved_by',
+        'closed_at',
+        'closed_by',
+        'complainant_name',
+        'guest_national_no',
+        'passport_no',
+        'longitude',
+        'latitude',
         'description',
         'category_id',
         'user_id',
-        'area',
-        'district',
-        'street',
-        'building_no',
+        'reopened_from_id',
     ];
 
     public function user(){
@@ -33,14 +44,31 @@ class Complaint extends Model
     }
 
     public function jobOrder(){
-        return $this->hasOne(JobOrder::class);
+        return $this->hasMany(JobOrder::class);/*Not Sure if we want this to stay hasMany not hasOne*/
     }
 
     public function feedback(){
-        return $this->hasMany(Feedback::class);
+        return $this->hasOne(Feedback::class);/*Not Sure if we want this to stay hasOne not hasMany*/
     }
 
     public function reopenedComplaint(){
         return $this->belongsTo(Complaint::class, 'reopened_from_id');
+    }
+
+    // --- Auditing relationships ---
+    public function approvedBy(){
+        return $this->belongsTo(Employee::class, 'approved_by');
+    }
+
+    public function rejectedBy(){
+        return $this->belongsTo(Employee::class, 'rejected_by');
+    }
+
+    public function resolvedBy(){
+        return $this->belongsTo(Employee::class, 'resolved_by');
+    }
+
+    public function closedBy(){
+        return $this->belongsTo(Employee::class, 'closed_by');
     }
 }

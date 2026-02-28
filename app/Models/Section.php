@@ -10,13 +10,9 @@ class Section extends Model
     /** @use HasFactory<\Database\Factories\SectionFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'dept_id'];
+    protected $fillable = ['section_code','name', 'division_id'];
 
-    public function department(){
-        return $this->belongsTo(Department::class, 'dept_id');
-    }
-
-    public function divisions(){
-        return $this->hasMany(Division::class);
+    public function division(){
+        return $this->belongsTo(Division::class);
     }
 }

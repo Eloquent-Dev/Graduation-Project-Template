@@ -12,9 +12,13 @@ class JobOrder extends Model
 
     protected $fillable = [
         'complaint_id',
-        'assigned_to',
         'assigned_by',
         'assigned_at',
+        'completed_at',
+        'closed_at',
+        'closed_by',
+        'closure_reason',
+        'complaint_id',
         'status',
         'priority',
     ];
@@ -23,12 +27,17 @@ class JobOrder extends Model
         return $this->belongsTo(Complaint::class);
     }
 
-    public function assignedTo(){
-        return $this->belongsTo(Employee::class, 'assigned_to');
+    public function workers(){
+        return $this->belongsToMany(Employee::class, 'employee_job_order')
+        ->withTimestamps();
     }
 
     public function assignedBy(){
         return $this->belongsTo(Employee::class, 'assigned_by');
+    }
+
+    public function closedBy(){
+        return $this->belongsTo(Employee::class, 'closed_by');
     }
 
     public function completionReport(){

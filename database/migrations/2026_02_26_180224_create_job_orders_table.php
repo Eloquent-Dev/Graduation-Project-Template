@@ -15,12 +15,9 @@ return new class extends Migration
             $table->id();
             $table->enum('status', ['pending', 'in_progress', 'completed','reopened','under_review','closed'])->default('pending');
             $table->enum('priority', ['low', 'medium', 'high'])->default('low');
-            $table->foreignId('assigned_to')->nullable()->constrained('employees')->onDelete('cascade');
             $table->foreignId('assigned_by')->nullable()->constrained('employees')->onDelete('cascade');
             $table->timestamp('assigned_at')->nullable();
             $table->timestamp('completed_at')->nullable();
-            $table->foreignId('completed_by')->nullable()->constrained('employees')->onDelete('cascade');
-            $table->timestamp('closed_at')->nullable();
             $table->foreignId('closed_by')->nullable()->constrained('employees')->onDelete('cascade');
             $table->text('closure_reason')->nullable();
             $table->foreignId('complaint_id')->constrained('complaints')->onDelete('cascade');

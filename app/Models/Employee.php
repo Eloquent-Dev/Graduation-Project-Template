@@ -25,12 +25,21 @@ class Employee extends Model
         return $this->belongsTo(Department::class);
     }
 
-    public function assignedJobs(){
-        return $this->hasMany(JobOrder::class, 'assigned_to');
+    public function assignedJobOrders(){
+        return $this->belongsToMany(JobOrder::class, 'employee_job_order')
+        ->withTimestamps();
     }
 
-    public function createdJobs(){
+    public function dispatchedJobsBy(){
         return $this->hasMany(JobOrder::class, 'assigned_by');
+    }
+
+    public function approvedComplaintsBy(){
+        return $this->hasMany(Complaint::class, 'approved_by');
+    }
+
+    public function rejectedComplaintsBy(){
+        return $this->hasMany(Complaint::class, 'rejected_by');
     }
 
     public function completionReports(){

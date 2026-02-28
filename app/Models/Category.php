@@ -11,13 +11,13 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = [
-        'complaint_type',
+        'name',
         'allowance_period',
-        'dept_id',
+        'division_id',
     ];
 
-    public function department(){
-        return $this->belongsTo(Department::class, 'dept_id');
+    public function division(){
+        return $this->belongsTo(Division::class);
     }
 
     public function complaints(){
