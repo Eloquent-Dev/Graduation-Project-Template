@@ -11,7 +11,6 @@ class JobOrder extends Model
     use HasFactory;
 
     protected $fillable = [
-        'complaint_id',
         'assigned_by',
         'assigned_at',
         'completed_at',

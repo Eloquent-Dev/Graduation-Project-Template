@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('assigned_at')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->foreignId('closed_by')->nullable()->constrained('employees')->onDelete('cascade');
+            $table->timestamp('closed_at')->nullable();
             $table->text('closure_reason')->nullable();
             $table->foreignId('complaint_id')->constrained('complaints')->onDelete('cascade');
             $table->timestamps();
