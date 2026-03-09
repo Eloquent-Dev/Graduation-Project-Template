@@ -18,7 +18,6 @@ class GoogleController extends Controller
 
         $user = User::firstOrCreate(['email' => $googleUser->getEmail()],[
             'name' => $googleUser->getName(),
-            'email' => $googleUser->getEmail(),
             'password'=> bcrypt(Str::random(24)),
         ]);
 
