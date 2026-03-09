@@ -143,6 +143,14 @@
         </div>
     @endif
 
+    @if(session('warning') && is_null(auth()->user()->national_no))
+        <div class="max-w-8xl px-6 lg:px-8 mt-4">
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded shadow-sm" role="alert">
+                <p>{{ session('warning') }}</p>
+            </div>
+        </div>
+    @endif
+
     <main class="grow max-w-7xl mx-auto px-6 lg:px-8 py-8 w-full">
         @yield('content')
     </main>
@@ -155,7 +163,7 @@
     </footer>
     @php
     $autoOpenView = '';
-    if(session('needs_oauth_completion')){
+    if(auth()->check() && (is_null(auth()->user()->national_no) || is_null(auth()->user()->phone))){
         $autoOpenView = 'oauth';
     }
     elseif($errors->has('name')|| $errors->has('national-no')||$errors->has('register-email')||$errors->has('phone_full')||$errors->has('register-password')){

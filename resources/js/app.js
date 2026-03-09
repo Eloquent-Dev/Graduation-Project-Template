@@ -31,28 +31,35 @@ authModal.addEventListener('click', (e) =>{
         authModal.classList.add('hidden')
     }
 })
-
-openAuthBtn.addEventListener('click',(e)=> {
+if(openAuthBtn){
+    openAuthBtn.addEventListener('click',(e)=> {
     e.preventDefault();
 
     loginView.classList.remove('hidden')
     registerView.classList.add('hidden')
     authModal.classList.remove('hidden')
 })
+}
 
-closeAuthBtn.addEventListener('click',() =>{
+if(closeAuthBtn){
+    closeAuthBtn.addEventListener('click',() =>{
     authModal.classList.add('hidden')
 })
+}
 
-showRegisterBtn.addEventListener('click',()=>{
+if(showRegisterBtn){
+    showRegisterBtn.addEventListener('click',()=>{
     loginView.classList.add('hidden')
     registerView.classList.remove('hidden')
 })
+}
 
-showLoginBtn.addEventListener('click',()=>{
+if(showLoginBtn){
+    showLoginBtn.addEventListener('click',()=>{
     registerView.classList.add('hidden')
     loginView.classList.remove('hidden')
 })
+}
 
 const autoOpen = authModal.getAttribute('data-auto-open')
 

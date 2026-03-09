@@ -16,32 +16,24 @@ class GoogleController extends Controller
             /** @var \Laravel\Socialite\Two\User $googleUser */
         $googleUser = Socialite::driver('google')->user();
 
-        $existingUser = User::where('email', $googleUser->getEmail())->first();
-
-        if($existingUser){
-            Auth::login($existingUser);
-
-            return redirect('/');
-        }
-
-        session([
-            'pending_user' =>[
-                'name' => $googleUser->getName(),
-                'email' => $googleUser->getEmail(),
-                'google_id' => $googleUser->getId(),
-            ],
-            'needs_oauth_completion' => true
+        $user = User::firstOrCreate(['email' => $googleUser->getEmail()],[
+            'name' => $googleUser->getName(),
+            'email' => $googleUser->getEmail(),
+            'password'=> bcrypt(Str::random(24)),
         ]);
 
-        return redirect('/');
+        Auth::login($user);
+
+        return redirect('/')->with('warning','Additional Infromation Needed!');
         }catch(\Exception $e){
-            return redirect('/')->with('Google login failed. Please try again.');
+            return redirect('/')->with('error','Google login failed. Please try again.');
         }
 
     }
 
     public function redirectToGoogle(){
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')
+        ->redirect();
     }
 
     public function finishRegistration(Request $request){
@@ -54,21 +46,11 @@ class GoogleController extends Controller
             'phone_full' => 'phone number',
         ]);
 
-        $googleData = session('pending_user');
-
-        $user = User::create([
-            'name' => $googleData['name'],
+        auth()->user()->update([
             'national_no' => $request->input('national-no'),
-            'email' => $googleData['email'],
             'phone' => $request->phone_full,
-            'password' => bcrypt(Str::random(24)),
         ]);
 
-        session()->forget('pending_user');
-        session()->forget('needs_oauth_completion');
-
-        Auth::login($user);
-
-        return redirect('/')->with('success','Account Successfully created!');
+        return redirect('/')->with('success','Thank You! Your profile is now complete.');
     }
 }

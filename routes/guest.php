@@ -10,7 +10,6 @@ Route::middleware('guest')->group(function(){
 
     Route::get('auth/google/redirect', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
     Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('google.callback');
-    Route::post('/oauth/finish', [GoogleController::class,'finishRegistration'])->name('oauth.finish');
 
     Route::get('auth/microsoft/redirect', [MicrosoftController::class, 'redirectToMicrosoft'])->name('microsoft.redirect');
     Route::get('auth/microsoft/callback', [MicrosoftController::class, 'handleMicrosoftCallback'])->name('microsoft.callback');

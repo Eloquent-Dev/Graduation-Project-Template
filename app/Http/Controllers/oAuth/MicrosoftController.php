@@ -16,28 +16,20 @@ class MicrosoftController extends Controller
             /** @var \Laravel\Socialite\Two\User $microsoftUser */
         $microsoftUser = Socialite::driver('microsoft')->user();
 
-        $existingUser = User::where('email', $microsoftUser->getEmail())->first();
-
-        if($existingUser){
-            Auth::login($existingUser);
-
-            return redirect('/');
-        }
-
-        session([
-            'pending_user' =>[
-                'name' => $microsoftUser->getName(),
-                'email' => $microsoftUser->getEmail(),
-                'microsoft_id' => $microsoftUser->getId(),
-            ],
-            'needs_oauth_completion' => true
+        $user = User::firstOrCreate(['email' => $microsoftUser->getEmail()],[
+            'name' => $microsoftUser->getName(),
+            'email' => $microsoftUser->getEmail(),
+            'password'=> bcrypt(Str::random(24)),
         ]);
 
-        return redirect('/');
+        session(['needs_oauth_completion' => true]);
+
+        Auth::login($user);
+
+        return redirect('/')->with('warning','Additional Infromation Needed!');
         }catch(\Exception $e){
             return redirect('/')->with('Microsoft login failed. Please try again.');
         }
-
     }
 
     public function redirectToMicrosoft(){
