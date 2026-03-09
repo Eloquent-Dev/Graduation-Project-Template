@@ -86,13 +86,49 @@
                         <span></span>
                         <span></span>
                     </div>
-                    <button class="relative text-white hover:text-brand-orange transition focus:outline-none ml-2 mt-1">
+                    <div class="relative">
+                        <button type="button" id="notification-btn" class="relative text-white hover:text-brand-orange transition focus:outline-none ml-2 mt-1">
                         <i class="fa-regular fa-bell text-xl cursor-pointer"></i>
+                        @if(auth()->user()->unreadNotifications->count() > 0)
                         <span class="absolute -top-1 -right-1 flex h-3 w-3">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75 cursor-pointer"></span>
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75 cursor-pointer pointer-events-none"></span>
                             <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500 border-2 border-white cursor-pointer"></span>
                         </span>
+                        @endif
                     </button>
+
+                    <div id="notification-dropdown" class="hidden absolute left-0 mt-4 w-80 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
+                        <div class="bg-gray-50 border-b border-gray-100 px-4 py-3 flex justify-between items-center">
+                            <h3 class="text-sm font-bold tetx">Notifications</h3>
+                            @if(auth()->user()->unreadNotifications->count() > 0)
+                                {{ auth()->user()->unreadNotifications->count() }} New
+                            @endif
+                        </div>
+
+                        <div class="max-h-80 overflow-y-auto">
+                            @forelse (auth()->user()->unreadNotifications as $notification)
+                                <a href="{{ $notification->data['url'] }}" class="block px-4 py-3 hover:bg-blue-50 border-b border-gray-50 transition group">
+                                    <p class="text-sm font-semibold text-gray-800 group-hover:text-brand-blue">{{ $notification->data['title'] }}</p>
+                                    <p class="text-xs text-gray-600 mt-1 line-clamp-2">{{ $notification->data['message'] }}</p>
+                                    <p class="text-[10px] text-gray-400 mt-2 font-medium">{{$notification->created_at->diffForHumans()}}</p>
+                                </a>
+                            @empty
+                                <div class="px-4 py-8 text-center text-gray-400">
+                                    <i class="fa-regular fa-bell-slash text-2xl mb"></i>
+                                    <p class="text">You're all caught up!</p>
+                                </div>
+                            @endforelse
+                        </div>
+                            @if(auth()->user()->unreadNotifications->count() > 0)
+                                <div class="bg-gray-50 border-t border-gray-100 px-4 py-2 text-center">
+                                    <form action="#" method="POST">
+                                        @csrf
+                                        <button class="text-xs text-brand-orange font-bold hover:underline" type="submit">Mark all as read</button>
+                                    </form>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 <div class="flex items-center gap-2">
 
