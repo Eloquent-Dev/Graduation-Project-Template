@@ -7,6 +7,8 @@
     <title>City Voice - @yield('title', 'Smart Complaint Management')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
@@ -17,11 +19,9 @@
             <div id="menu-backdrop" class="fixed top-20 left-0 w-full h-[calc(100vh-5rem)] bg-gray-900/60 z-30 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"></div>
             <div id="side-menu" class="fixed top-20 left-0 w-72 bg-linear-to-r from-[#0e162a] to-[#11203f] h-[calc(100vh-5rem)] border-t border-white shadow-2xl z-40 transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
                 <div class="px-4 py-6 space-y-1 flex flex-col h-full">
-                    @guest
                     <a href="{{ route('home') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                         <i class="fa-solid fa-home w-5 text-center"></i> Home
                     </a>
-                    @endguest
                     @auth
                     <a href="#" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                         <i class="fa-solid fa-table-columns w-5 text-center"></i> Dashboard
@@ -62,11 +62,9 @@
                         <i class="fa-solid fa-chart-line w-5 text-center"></i> Admin Reports
                     </a>
                     @endif
-                    @guest
                     <a href="#" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                         <i class="fa-solid fa-plus w-5 text-center"></i> Submit Complaint
                     </a>
-                    @endguest
                     @auth
                     <div class="mt-auto">
                         <div class="border-t border-white my-4 flex items-end"></div>
@@ -75,7 +73,7 @@
                     </a>
                     </div>
                     @endauth
-                    
+
                 </div>
             </div>
 
@@ -86,6 +84,7 @@
                         <span></span>
                         <span></span>
                     </div>
+                    @auth
                     <button class="relative text-white hover:text-brand-orange transition focus:outline-none ml-2 mt-1">
                         <i class="fa-regular fa-bell text-xl cursor-pointer"></i>
                         <span class="absolute -top-1 -right-1 flex h-3 w-3">
@@ -93,6 +92,7 @@
                             <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500 border-2 border-white cursor-pointer"></span>
                         </span>
                     </button>
+                    @endauth
                 </div>
                 <div class="flex items-center gap-2">
 
@@ -105,28 +105,48 @@
                         <p class="text-blue-200 text-[10px] tracking-wider uppercase">Smart Complaint Management System</p>
                     </div>
                 </div>
-
+                @guest
                 <div>
-                    <a href="#" class="md:inline-block bg-brand-orange hover:bg-orange-600 text-white px-6 py-2 rounded shadow-lg transition font-semibold text-sm">
-                        Login
+                    <form action="{{ route('logout') }}">
+                        @csrf
+                    <a href="#" id="open-auth-btn" class="md:inline-block cursor-pointer bg-brand-orange hover:bg-orange-600 text-white px-6 py-2 rounded shadow-lg transition font-semibold text-sm">
+                        Sign In
                     </a>
+                    </form>
                 </div>
+                @endguest
+                @auth
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button class="md:inline-block cursor-pointer bg-brand-orange hover:bg-orange-600 text-white px-6 py-2 rounded shadow-lg transition font-semibold text-sm">
+                        Sign out
+                    </button>
+                </form>
+                @endauth
             </div>
         </div>
     </nav>
 
     @if(session('success'))
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 mt-4">
-            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-sm" role="alert">
+        <div class="max-w-8xl px-6 lg:px-8 mt-4">
+            <div class="bg-green-100 border-l-4 border-green-500 w-full text-green-700 p-4 rounded shadow-sm" role="alert">
                 <p>{{ session('success') }}</p>
             </div>
         </div>
     @endif
 
     @if(session('error'))
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 mt-4">
+        <div class="max-w-8xl px-6 lg:px-8 mt-4">
             <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-sm" role="alert">
                 <p>{{ session('error') }}</p>
+            </div>
+        </div>
+    @endif
+
+    @if(session('warning') && is_null(auth()->user()->national_no))
+        <div class="max-w-8xl px-6 lg:px-8 mt-4">
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded shadow-sm" role="alert">
+                <p>{{ session('warning') }}</p>
             </div>
         </div>
     @endif
@@ -141,6 +161,188 @@
             <p class="text-xs text-gray-300 mt-2">&copy; {{ date('Y') }} - All Rights Reserved.</p>
         </div>
     </footer>
+    @php
+    $autoOpenView = '';
+    if(auth()->check() && (is_null(auth()->user()->national_no) || is_null(auth()->user()->phone))){
+        $autoOpenView = 'oauth';
+    }
+    elseif($errors->has('name')|| $errors->has('national-no')||$errors->has('register-email')||$errors->has('phone_full')||$errors->has('register-password')){
+        $autoOpenView = 'register';
+    }elseif($errors->any()){
+        $autoOpenView = 'login';
+    }
+    @endphp
 
+    <div id="auth-modal" data-auto-open="{{ $autoOpenView }}" class="fixed inset-0 z-100 hidden flex items-center justify-center bg-gray-900/90 transition-opacity">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto relative">
+            <button id="close-auth-btn" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 focus:outline:none transition cursor-pointer">
+                <i class="fa-solid fa-xmark text-xl pointer-events-none"></i>
+            </button>
+
+            <div id="login-view" class="p-8">
+                <h2 class="text-2xl font-bold text-brand-dark mb-6 text-center">Welcome Back</h2>
+                <!-- OAuth Buttons -->
+            <div class="space-y-4">
+                <!-- Google Button -->
+                <a href="{{ route('google.redirect') }}" class="pointer w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-all duration-200 hover:border-slate-500 hover:shadow-lg">
+                    <img src="{{ asset('images/google_logo.png') }}" alt="Google Logo" class="w-5 h-5 mr-2" />
+                    <span class="text-gray-700 font-medium">Continue with Google</span>
+                </a>
+
+                <!-- Microsoft Button -->
+                <a href="{{ route('microsoft.redirect') }}" class="pointer w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-all duration-200 hover:border-slate-500 hover:shadow-lg">
+                    <img src="{{ asset('images/Microsoft_logo.png') }}" alt="Microsoft Logo" class="w-5 h-5 mr-3" />
+                    <span class="text-gray-700 font-medium">Continue with Microsoft</span>
+                </a>
+
+                <!-- Divider -->
+                <div class="relative mb-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-white text-gray-500">or continue with email</span>
+                    </div>
+                </div>
+            </div>
+                <form method="POST" action="{{ route('login') }}" class="space-y-4">
+                    @csrf
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email Address:</label>
+                        <input value="{{ old('login-email') }}" type="email" name="login-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition">
+                        @error('login-email')
+                        <p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Password:</label>
+                        <input type="password" name="login-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition">
+                        @error('login-password')
+                        <p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-blue hover:bg-blue-800 text-white font-bold py-3 rounded-lg shadow transition mt-2 cursor-pointer">
+                        Sign In
+                    </button>
+                </form>
+                <p class="mt-6 text-sm text-center text-gray-600">
+                    Don't have an account?
+                    <button id="show-register-btn" class="text-brand-orange font-bold hover:underline focus:outline-none cursor-pointer">
+                        Sign up here
+                    </button>
+                </p>
+            </div>
+
+            <div id="register-view" class="p-8 hidden">
+                <h2 class="text-2xl font-bold text-brand-dark mb-6 text-center">Create an Account</h2>
+
+                <!-- OAuth Buttons -->
+            <div class="space-y-4">
+                <!-- Google Button -->
+                <a href="{{ route('google.redirect') }}" class="pointer w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-all duration-200 hover:border-slate-500 hover:shadow-lg">
+                    <img src="{{ asset('images/google_logo.png') }}" alt="Google Logo" class="w-5 h-5 mr-3" />
+                    <span class="text-gray-700 font-medium">Continue with Google</span>
+                </a>
+
+                <!-- Microsoft Button -->
+                <a href="{{ route('microsoft.redirect') }}" class="pointer w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-all duration-200 hover:border-slate-500 hover:shadow-lg">
+                    <img src="{{ asset('images/Microsoft_logo.png') }}" alt="Microsoft Logo" class="w-5 h-5 mr-3" />
+                    <span class="text-gray-700 font-medium">Continue with Microsoft</span>
+                </a>
+
+                <!-- Divider -->
+                <div class="relative mb-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-white text-gray-500">or continue with email</span>
+                    </div>
+                </div>
+            </div>
+                <form action="{{ route('register') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name:</label>
+                        <input type="text" value="{{ old('name') }}" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition">
+                        @error('name')
+                        <p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">National Number:</label>
+                        <input type="text" value="{{ old('national-no') }}" name="national-no" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition">
+                        @error('national-no')
+                        <p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email:</label>
+                        <input type="email" value="{{ old('register-email') }}" name="register-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition">
+                        @error('register-email')
+                        <p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number:</label>
+                        <input id="phone-1" type="tel" value="{{ old('phone_full') }}" name="phone_full" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition">
+                        <input type="hidden" value="{{ old('country_code') }}" id="country_code" name="country_code">
+                        @error('phone_full')
+                        <p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Password:</label>
+                        <input type="password" name="register-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition">
+                        @error('register-password')
+                        <p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password:</label>
+                        <input type="password" name="password_confirmation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition">
+                        @error('password_confirmation')
+                        <p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <button type="submit" class="w-full bg-brand-blue hover:bg-blue-800 text-white font-bold py-3 rounded-lg shadow transition mt-2 cursor-pointer">
+                        Create Account
+                    </button>
+                </form>
+                <p class="mt-6 text-sm text-center text-gray-600">
+                    Already have an account?
+                    <button id="show-login-btn" class="text-brand-orange font-bold hover:underline focus:outline-none cursor-pointer">
+                        Sign In here
+                    </button>
+                </p>
+            </div>
+            <div id="oauth-complete-view" class="p-8 hidden">
+                <h2 class="text-2xl font-bold text-brand-dark mb-2 text-center">Almost Done!</h2>
+                <p class="text-sm text-gray-600 mb-6 text-center">We just need a few official details to secure your account.</p>
+                <form action="{{ route('oauth.finish') }}" method="post" class="space-y-4">
+                    @csrf
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">National Number:</label>
+                        <input type="text" value="{{ old('national-no') }}" name="national-no" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition">
+                        @error('national-no')
+                        <p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number:</label>
+                        <input id="phone-2" type="tel" value="{{ old('phone_full') }}" name="phone_full" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition">
+                        <input type="hidden" value="{{ old('country_code') }}" id="country_code" name="country_code">
+                        @error('phone_full')
+                        <p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <button type="submit" class="w-full bg-brand-blue hover:bg-blue-800 text-white font-bold py-3 rounded-lg shadow transition mt-2 cursor-pointer">
+                        Complete Registeration
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
