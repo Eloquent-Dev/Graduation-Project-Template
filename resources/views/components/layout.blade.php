@@ -62,7 +62,7 @@
                         <i class="fa-solid fa-chart-line w-5 text-center"></i> Admin Reports
                     </a>
                     @endif
-                    <a href="#" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
+                    <a href="{{ route('complaints.create') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                         <i class="fa-solid fa-plus w-5 text-center"></i> Submit Complaint
                     </a>
                     @auth
@@ -188,7 +188,7 @@
     @endif
 
     <main class="grow max-w-7xl mx-auto px-6 lg:px-8 py-8 w-full">
-        @yield('content')
+        {{ $slot }}
     </main>
 
     <footer class="bg-linear-to-r from-brand-dark to-brand-blue border-t border-gray-700 py-6 mt-auto">

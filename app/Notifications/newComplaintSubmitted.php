@@ -52,7 +52,7 @@ class newComplaintSubmitted extends Notification
         return [
             'complaint_id' => $this->complaint->id,
             'title' => 'New Complaint Submitted',
-            'message' => 'A new issue ('. $this->complaint->category.') has been reported.',
+            'message' => 'A new issue ('. $this->complaint->category->name.') has been reported.',
             'url' => '/admin/complaints/'. $this->complaint->id,
             'icon' => 'alert-circle'
         ];

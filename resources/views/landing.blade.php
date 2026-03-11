@@ -1,2 +1,4 @@
-@extends('components.layout')
+<x-layout>
+    
+</x-layout>
 

@@ -43,6 +43,7 @@ return [
         'client_id' => env('MICROSOFT_CLIENT_ID'),
         'client_secret' => env('MICROSOFT_CLIENT_SECRET'),
         'redirect' => env('MICROSOFT_REDIRECT_URI')
-    ]
+    ],
+    'google_maps_key' => env('GOOGLE_MAPS_API_KEY'),
 
 ];

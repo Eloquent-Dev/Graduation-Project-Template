@@ -27,11 +27,11 @@ return new class extends Migration
             $table->string('complainant_name')->nullable();
             $table->string('guest_national_no')->nullable();
             $table->string('passport_no')->nullable();
-            $table->string('longitude');
             $table->string('latitude');
+            $table->string('longitude');
             $table->text('description');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->foreignId('reopened_from_id')->nullable()->constrained('complaints')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
