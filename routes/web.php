@@ -11,8 +11,7 @@ Route::get('/', function () {
     return view('landing');
 })->name('home');
 
-    Route::get('/complaints/create',[ComplaintController::class,'create'])
-    ->name('complaints.create');
-
-    Route::post('/complaints',[ComplaintController::class, 'store'])
-    ->name('complaints.store');
+Route::get('/complaints/create',[ComplaintController::class,'create'])
+->name('complaints.create');
+Route::post('/complaints',[ComplaintController::class, 'store'])
+->name('complaints.store');

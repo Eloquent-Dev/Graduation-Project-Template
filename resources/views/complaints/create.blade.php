@@ -1,7 +1,8 @@
 <x-layout>
     @section('title','Submit a complaint')
 
-    <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+    <div class="mr-auto ml-auto px-6 py-8 lg:px-8 w-[50%]">
+        <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
         <h2 class="text-3xl font-bold text-brand-dark mb-6 border-b pb-4">Report an Issue</h2>
 
         <form action="{{ route('complaints.store') }}" method="post" class="space-y-6">
@@ -51,11 +52,12 @@
             </div>
 
             <div class="pt-4 border-t border-gray-100">
-                <button type="submit" class="w-full bg-brand-blue hover:bg-blue-800 text-white font-bold py-3 rounded-lg shadow-lg transition text-lg">
+                <button type="submit" class="w-full bg-brand-blue hover:bg-blue-800 text-white font-bold py-3 rounded-lg shadow-lg transition text-lg pointer">
                     Submit Complaint
                 </button>
             </div>
         </form>
+    </div>
     </div>
 
     <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps_key') }}&callback=initMap&loading=async" async defer></script>
@@ -100,7 +102,7 @@
         // FIX 3: Moved outside the else block so coordinates update every time it moves!
         // FIX 1: Fixed the "doument" typo
         document.getElementById("latitude").value = latLng.lat();
-        document.getElementById("longitude").value = latLng.lng(); 
+        document.getElementById("longitude").value = latLng.lng();
     }
 
     // FIX 2: Moved this entirely outside of the placeMarker function!

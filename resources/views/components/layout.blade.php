@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,7 +96,7 @@
                         @endif
                     </button>
 
-                    <div id="notification-dropdown" class="hidden absolute left-0 mt-4 w-80 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
+                    <div id="notification-dropdown" class="hidden absolute left-0 mt-4 w-80 h-100 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
                         <div class="bg-gray-50 border-b border-gray-100 px-4 py-3 flex justify-between items-center">
                             <h3 class="text-sm font-bold tetx">Notifications</h3>
                             @if(auth()->user()->unreadNotifications->count() > 0)
@@ -162,8 +162,8 @@
             </div>
         </div>
     </nav>
-
-    @if(session('success'))
+    <div class="fixed top-24 left-4 z-20 pointer-events-none flex flex-col gap-3 w-full">
+        @if(session('success'))
         <div class="max-w-8xl px-6 lg:px-8 mt-4">
             <div class="bg-green-100 border-l-4 border-green-500 w-full text-green-700 p-4 rounded shadow-sm" role="alert">
                 <p>{{ session('success') }}</p>
@@ -186,8 +186,9 @@
             </div>
         </div>
     @endif
+    </div>
 
-    <main class="grow max-w-7xl mx-auto px-6 lg:px-8 py-8 w-full">
+    <main class="grow flex flex-col w-full">
         {{ $slot }}
     </main>
 
