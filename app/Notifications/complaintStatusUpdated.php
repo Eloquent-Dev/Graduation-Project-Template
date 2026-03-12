@@ -53,7 +53,7 @@ class complaintStatusUpdated extends Notification
             'complaint_id' => $this->complaint->id,
             'title' => 'Status Update',
             'message' => 'The status of your complaint has been updated to: '. $this->complaint->status,
-            'url' => '/citizen/my-complaints/'. $this->complaint->id,
+            'url' => '/citizen/complaints/'. $this->complaint->id,
             'icon' => 'info'
         ];
     }
