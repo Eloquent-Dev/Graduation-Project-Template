@@ -28,6 +28,6 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        Category::factory()->create()->count(5);
+        $this->call(OrganizationSeeder::class);
     }
 }
