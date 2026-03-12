@@ -49,11 +49,20 @@ class newComplaintSubmitted extends Notification
      */
     public function toArray(object $notifiable): array
     {
+        if($notifiable->role === 'dispatcher' || $notifiable->role === 'admin')
+        {
+            $url = '/dispatcher/complaints/'. $this->complaint->id;
+        }
+        else
+        {
+            $url = '/my-complaints/' . $this->complaint->id;
+        }
+
         return [
             'complaint_id' => $this->complaint->id,
             'title' => 'New Complaint Submitted',
             'message' => 'A new issue ('. $this->complaint->category->name.') has been reported.',
-            'url' => '/dispatcher/complaints/'. $this->complaint->id,
+            'url' => $url,
             'icon' => 'alert-circle'
         ];
     }

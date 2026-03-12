@@ -26,7 +26,7 @@
                     <a href="#" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                         <i class="fa-solid fa-table-columns w-5 text-center"></i> Dashboard
                     </a>
-                    <a href="#" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
+                    <a href="{{ route('complaints.index') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                         <i class="fa-solid fa-file-circle-exclamation w-5 text-center"></i> My Complaints
                     </a>
                     @endauth
@@ -205,7 +205,7 @@
     }
     elseif($errors->has('name')|| $errors->has('national-no')||$errors->has('register-email')||$errors->has('phone_full')||$errors->has('register-password')){
         $autoOpenView = 'register';
-    }elseif($errors->any()){
+    }elseif($errors->has('login-email') || $errors->has('login-password')){
         $autoOpenView = 'login';
     }
     @endphp
