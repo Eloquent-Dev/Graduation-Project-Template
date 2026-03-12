@@ -8,6 +8,36 @@
         <form action="{{ route('complaints.store') }}" method="post" class="space-y-6">
             @csrf
 
+            @guest
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 space-y-4 mb-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-brand-dark">Guest Information</h3>
+                        <p class="text-xs text-gray-500">Since You're not logged in, Please provide your details to submit this issue.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Full Name <span class="text-red-500">*</span></label>
+                        <input type="text" value="{{ old('complainant_name') }}" placeholder="John Doe" name="complainant_name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none">
+                        @error('complainant_name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">National Number</label>
+                            <input type="text" value="{{ old('guest_national_no') }}" placeholder="For Citizens" name="guest_national_no" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none">
+                            @error('guest_national_no') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Passport Number</label>
+                            <input type="text" value="{{ old('passport_no') }}" placeholder="For Non-Citizens" name="passport_no" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none">
+                            @error('passport_no') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-gray-400 italic">* Please provide either a National Number OR Passport Number.</p>
+                </div>
+            @endguest
+
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-1">Issue Title</label>
                 <input type="text" name="title" value="{{ old('title') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none">
@@ -37,7 +67,7 @@
                 <div class="flex justify-between items-center mb-2">
                     <label class="block text-sm font-bold text-gray-700">Exact Location</label>
                     <button type="button" id="get-location-btn" class="text-xs bg-brand-orange hover:bg-orange-600 text-white px-3 py-1 rounded shadow transition flex items-center gap-1">
-                        <i class="fa-solid fa-location-crosshairs"></i> Use My GPS
+                        <i class="fa-solid fa-location-crosshairs"></i> Use My Location
                     </button>
                 </div>
 
