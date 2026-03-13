@@ -8,6 +8,7 @@ use App\Models\Complaint;
 use App\Models\User;
 use App\Notifications\newComplaintSubmitted;
 use Illuminate\Support\Facades\Notification;
+use App\Models\JobOrder;
 
 class ComplaintController extends Controller
 {
@@ -66,6 +67,10 @@ class ComplaintController extends Controller
             'complainant_name' =>$validated['complainant_name'] ?? null,
             'guest_national_no' => $validated['guest_national_no'] ?? null,
             'passport_no' => $validated['passport_no'] ?? null
+        ]);
+
+        JobOrder::create([
+            'complaint_id' => $complaint->id
         ]);
 
         $dispatchers = User::whereIn('role' , ['dispatcher','admin'])->get()->all();
