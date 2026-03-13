@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('job_title');
             $table->string('dispatch_area')->nullable();
-            $table->foreignId('division_id')->constrained('departments')->onDelete('cascade');
+            $table->foreignId('division_id')->constrained('divisions')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
