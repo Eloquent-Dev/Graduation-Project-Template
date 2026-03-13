@@ -39,7 +39,7 @@
                     </a>
                     @endif
                     @if(auth()->check() && auth()->user()->role === 'dispatcher')
-                    <a href="#" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
+                    <a href="{{ route('dispatcher.job_orders.index') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                         <i class="fa-solid fa-paper-plane w-5 text-center"></i> Dispatch Job
                     </a>
                     @endif
