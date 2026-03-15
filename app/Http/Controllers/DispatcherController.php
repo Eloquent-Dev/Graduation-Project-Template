@@ -27,6 +27,10 @@ class DispatcherController extends Controller
     }
 
     public function show(JobOrder $jobOrder){
+
+    if($jobOrder->status !=='pending'){
+        abort(403,'This Job Order has already been dispatched');
+    }
         $jobOrder->load(['complaint.category','complaint.user','workers.user']);
 
         $divisionId = $jobOrder->complaint->category->division_id;
@@ -51,6 +55,9 @@ class DispatcherController extends Controller
     }
 
     public function update(storeJobRequest $request,JobOrder $jobOrder){
+        if($jobOrder->status !== 'pending'){
+            abort(403,'This Job Order has already been dispatched');
+        }
         $request->validate([
             'supervisor_ids' => 'required|array|min:1|max:1',
             'supervisor_ids.*' => 'exists:employees,id',

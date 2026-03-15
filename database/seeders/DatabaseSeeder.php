@@ -37,13 +37,15 @@ class DatabaseSeeder extends Seeder
                     'role' => $role
                 ]);
 
-                if(in_array($role,['worker','supervisor'])){
+                if(in_array($role,['worker','supervisor','dispatcher'])){
                     $assignedDivision = $divisions[$i % $divisionCount];
 
                     Employee::create([
                         'user_id' => $user->id,
                         'division_id' => $assignedDivision->id,
-                        'job_title' => $role === 'supervisor' ? 'Division Supervisor' : 'Field Technician',
+                        'job_title' => ($role === 'supervisor')
+                        ? 'Division Supervisor'
+                        : (($role === 'worker') ? 'Field Technician': 'Website Dispatcher'),
                     ]);
                 }
             }

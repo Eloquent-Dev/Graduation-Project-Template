@@ -8,7 +8,7 @@
             </div>
 
             <div>
-                <i class="fa-solid fa-list-check mr-2"></i> Active Orders: {{ $jobOrders->total() }}
+                <i class="fa-solid fa-list-check mr-2"></i> Active Orders: {{ $jobOrders->where('status','pending')->count() }}
             </div>
         </div>
 
@@ -73,12 +73,12 @@
                                         @if($job->workers->count() > 0)
                                             <div class="flex -space-x-2 overflow-hidden">
                                                 @foreach ($job->workers->take(3) as $worker)
-                                                    <div class="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-brand-blue text-white flex items-center justify-center text-xs font-bold" title="{{ $worker->user->name }}">
+                                                    <div class=" h-8 w-8 rounded-full ring-2 ring-white bg-brand-blue text-white flex items-center justify-center text-xs font-bold" title="{{ $worker->user->name }}">
                                                         {{ substr($worker->user->name,0,1) }}
                                                     </div>
                                                 @endforeach
                                                 @if($job->workers->count() > 3)
-                                                    <div class="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold">
+                                                    <div class=" h-8 w-8 rounded-full ring-2 ring-white bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold">
                                                         +{{ $job->workers->count() - 3 }}
                                                     </div>
                                                 @endif
@@ -88,9 +88,15 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 text-right">
+                                        @if(in_array($job->status,['pending']))
                                         <a href="{{ route('dispatcher.job_orders.show', $job->id) }}" class="bg-brand-blue hover:bg-blue-800 text-white px-3 py-1.5 rounded text-xs font-bold transition shadow-sm">
                                             Dispatch <i class="fa-solid fa-truck-fast ml-1"></i>
                                         </a>
+                                        @else
+                                            <span class="bg-gray-200 text-gray-500 px-3 py-1.5 rounded text-sm font-bold cursor-not-allowed inline-block border border-gray-300">
+                                                Dispatched <i class="fa-solid fa-lock ml-1"></i>
+                                            </span>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

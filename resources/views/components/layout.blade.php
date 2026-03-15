@@ -120,12 +120,14 @@
                                 </div>
                             @endforelse
                         </div>
+                        @if(auth()->user()->notifications()->count() > 0)
                                 <div class="bg-gray-50 border-t border-gray-100 px-4 py-2 text-center">
                                     <form action="{{ route('notifications.markAllRead') }}" method="get">
                                         @csrf
                                         <button class="text-xs text-brand-orange font-bold hover:underline pointer" type="submit">Mark all as read</button>
                                     </form>
                                 </div>
+                        @endif
                         </div>
                     </div>
                     @endauth
