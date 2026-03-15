@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Complaint;
+use App\Notifications\complaintStatusUpdated;
 use Illuminate\Http\Request;
 use App\Models\JobOrder;
 use App\Models\Employee;
@@ -81,6 +82,10 @@ class DispatcherController extends Controller
         $jobOrder->complaint->update([
             'status' => 'in_progress'
         ]);
+
+        if($jobOrder->complaint->user){
+            $jobOrder->complaint->user->notify(new complaintStatusUpdated($jobOrder->complaint));
+        }
 
         return redirect()->route('dispatcher.job_orders.index')
         ->with('success','Field team dispatched! Job Order is now In Progress.');

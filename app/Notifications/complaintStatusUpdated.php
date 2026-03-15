@@ -49,12 +49,22 @@ class complaintStatusUpdated extends Notification
      */
     public function toArray(object $notifiable): array
     {
+        $formattedStatus = ucwords(str_replace('_',' ',$this->complaint->status));
+
+        $icon = match($this->complaint->status){
+            'under_review' => 'magnifying-glass',
+            'in_progress' => 'person-digging',
+            'resolved' => 'check-double',
+            'closed' => 'folder-close',
+            default => 'bell'
+        };
+
         return [
             'complaint_id' => $this->complaint->id,
             'title' => 'Status Update',
-            'message' => 'The status of your complaint has been updated to: '. $this->complaint->status,
-            'url' => '/citizen/complaints/'. $this->complaint->id,
-            'icon' => 'info'
+            'message' => 'your complaint ('.$this->complaint->title .') has been updated to: '. $formattedStatus.'.',
+            'url' => '/my-complaints/'. $this->complaint->id,
+            'icon' => $icon
         ];
     }
 }
