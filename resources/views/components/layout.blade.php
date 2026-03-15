@@ -105,11 +105,13 @@
                         </div>
 
                         <div class="max-h-80 overflow-y-auto">
-                            @forelse (auth()->user()->unreadNotifications as $notification)
-                                <a href="{{ $notification->data['url'] }}" class="block px-4 py-3 hover:bg-blue-50 border-b border-gray-50 transition group">
-                                    <p class="text-sm font-semibold text-gray-800 group-hover:text-brand-blue">{{ $notification->data['title'] }}</p>
-                                    <p class="text-xs text-gray-600 mt-1 line-clamp-2">{{ $notification->data['message'] }}</p>
-                                    <p class="text-[10px] text-gray-400 mt-2 font-medium">{{$notification->created_at->diffForHumans()}}</p>
+                            @forelse (auth()->user()->notifications()->take(10)->get() as $notification)
+                                <a href="{{ route('notifications.read',$notification->id) }}" class="block px-4 py-3 hover:bg-blue-50 border-b border-gray-50 transition group">
+                                    <div>
+                                        <p class="text-sm font-semibold text-gray-800 group-hover:text-brand-blue"><i class="fa-solid fa-{{ $notification->data['icon'] }} text-brand-blue text-sm"></i> {{ $notification->data['title'] }}</p>
+                                        <p class="text-xs text-gray-600 mt-1 line-clamp-2">{{ $notification->data['message'] }}</p>
+                                        <p class="text-[10px] text-gray-400 mt-2 font-medium">{{$notification->created_at->diffForHumans()}}</p>
+                                    </div>
                                 </a>
                             @empty
                                 <div class="px-4 py-8 text-center text-gray-400">
@@ -118,14 +120,12 @@
                                 </div>
                             @endforelse
                         </div>
-                            @if(auth()->user()->unreadNotifications->count() > 0)
                                 <div class="bg-gray-50 border-t border-gray-100 px-4 py-2 text-center">
-                                    <form action="#" method="POST">
+                                    <form action="{{ route('notifications.markAllRead') }}" method="get">
                                         @csrf
-                                        <button class="text-xs text-brand-orange font-bold hover:underline" type="submit">Mark all as read</button>
+                                        <button class="text-xs text-brand-orange font-bold hover:underline pointer" type="submit">Mark all as read</button>
                                     </form>
                                 </div>
-                            @endif
                         </div>
                     </div>
                     @endauth
@@ -207,6 +207,8 @@
         $autoOpenView = 'register';
     }elseif($errors->has('login-email') || $errors->has('login-password')){
         $autoOpenView = 'login';
+    }elseif(session('openLoginModal')){
+        $autoOpenView = 'login';
     }
     @endphp
 
@@ -242,7 +244,7 @@
                     </div>
                 </div>
             </div>
-                <form method="POST" action="{{ route('login') }}" class="space-y-4">
+                <form method="POST" action="{{ route('login.submit') }}" class="space-y-4">
                     @csrf
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Email Address:</label>

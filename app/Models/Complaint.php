@@ -43,7 +43,7 @@ class Complaint extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function jobOrder(){
+    public function jobOrders(){
         return $this->hasMany(JobOrder::class);
     }
 

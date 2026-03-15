@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class newComplaintSubmitted extends Notification
+class ComplaintRecieved extends Notification
 {
     use Queueable;
 
@@ -51,10 +51,10 @@ class newComplaintSubmitted extends Notification
     {
         return [
             'complaint_id' => $this->complaint->id,
-            'title' => 'Action Required: New Complaint',
-            'message' => 'A new issue ('. $this->complaint->category->name.') has been submitted and requires review.',
-            'url' => '/dispatcher/job-orders/'. $this->complaint->jobOrders()->latest()->first()->id,
-            'icon' => 'triangle-exclamation'
+            'title' => 'Complaint Recieved',
+            'message' => 'Thank you! we have recieved your complaint regarding: '. $this->complaint->category->name . '.',
+            'url' => '/my-complaints/' . $this->complaint->id,
+            'icon' => 'circle-check'
         ];
     }
 }

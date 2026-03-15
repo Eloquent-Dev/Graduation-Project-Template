@@ -8,7 +8,7 @@
                 <p class="text-gray-500 text-sm">Track the status of the issues you have submitted.</p>
             </div>
             <a href="{{ route('complaints.create') }}" class="bg-brand-orange hover:bg-orange-600 text-white px-4 py-2 rounded shadow transition text-sm font-bold flex items-center gap-2">
-                <i class="fa-solid fa-plus"></i> New Report
+                <i class="fa-solid fa-plus"></i> New Complaint
             </a>
         </div>
 

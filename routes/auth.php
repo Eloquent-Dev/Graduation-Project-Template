@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\oAuth\GoogleController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\NotificationController;
 
 
 Route::middleware('auth')->group(function(){
@@ -17,5 +18,11 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/my-complaints/{complaint}',[ComplaintController::class,'show'])
     ->name('complaints.show');
+
+    Route::get('/notifications/{id}/read', [NotificationController::class,'markAsRead'])
+    ->name('notifications.read');
+
+    Route::get('/notifications/mark-all-read',[NotificationController::class,'markAllRead'])
+    ->name('notifications.markAllRead');
 
 });

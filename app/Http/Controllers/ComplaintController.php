@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Complaint;
 use App\Models\User;
 use App\Notifications\newComplaintSubmitted;
+use App\Notifications\ComplaintRecieved;
 use Illuminate\Support\Facades\Notification;
 use App\Models\JobOrder;
 
@@ -73,11 +74,13 @@ class ComplaintController extends Controller
             'complaint_id' => $complaint->id
         ]);
 
-        $dispatchers = User::whereIn('role' , ['dispatcher','admin'])->get()->all();
-
-        if(auth()->check()) $dispatchers[] = auth()->user();
-
+        $dispatchers = User::where('role' , 'dispatcher')->get();
         Notification::send($dispatchers, new newComplaintSubmitted($complaint));
+
+        if(auth()->check())
+            {
+                auth()->user()->notify(new ComplaintRecieved($complaint));
+            };
 
         return redirect()->route('home')->with('success','Your complaint has been submitted and is under review');
     }

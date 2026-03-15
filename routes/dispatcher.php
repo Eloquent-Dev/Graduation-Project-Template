@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DispatcherController;
+use App\Http\Middleware\RoleMiddleware;
 
 Route::middleware(['auth','role:dispatcher'])->prefix('dispatcher')->name('dispatcher.')->group(function(){
 
