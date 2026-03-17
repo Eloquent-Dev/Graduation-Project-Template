@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('job_orders', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['pending', 'in_progress', 'completed','reopened','under_review','closed'])->default('pending');
+            $table->enum('status', ['pending','in_progress','approved','resolved','under_review','reopened','rejected'])->default('pending');
             $table->enum('priority', ['low', 'medium', 'high'])->default('low');
             $table->foreignId('assigned_by')->nullable()->constrained('employees')->onDelete('cascade');
             $table->timestamp('assigned_at')->nullable();
