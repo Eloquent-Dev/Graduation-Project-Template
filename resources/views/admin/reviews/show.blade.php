@@ -83,43 +83,53 @@
                     @method('PATCH')
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                        <label class="relative flex flex-col p-4 pointer border-2 border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-500 transition-all duration-200 focus-within:border-green-500 focus-within:ring-1 focus-within:ring-green-500 group">
-                            <input type="radio" name="decision" value="approve" class="h-0 w-0 opacity-0 peer" required>
-                            <div class="flex items-center gap-3 mb-2">
-                                <i class="fa-solid fa-circle-check text-gray-400 group-hover:text-green-500 peer-checked:text-green-600 text-xl transition-colors"></i>
-                                <span class="font-bold text-gray-900 peer-checked:text-green-800">Approve Work</span>
+                        <label class="relative block pointer h-full">
+                            <input type="radio" name="decision" value="approve" class="peer sr-only" required>
+                            <div class="flex flex-col p-4 border-2 border-gray-200 rounded-lg transition-all duration-200 hover:bg-green-50 hover:border-green-400 peer-checked:border-green-500 peer-checked:bg-green-50 peer-checked:shadow-sm peer-checked:[&_.icon]:text-green-600 peer-checked:[&_.title]:text-green-800">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <i class="fa-solid fa-circle-check text-gray-400 text-xl transition-colors icon"></i>
+                                    <span class="font-bold text-gray-900 transition-colors title">Approve Work</span>
+                                </div>
+
+                                <span class="text-xs text-gray-500 leading-relaxed pl-8">Mark "Approved" pending citizen feedback.</span>
                             </div>
-                            <span class="text-xs text-gray-500 leading-relaxed pl-8">Mark "Approved" pending citizen feedback.</span>
-                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-green-500 rounded-lg pointer-events-none"></div>
                         </label>
 
-                        <label class="relative flex flex-col p-4 pointer border-2 border-gray-200 rounded-lg hover:bg-orange-50 hover:border-brand-orange transition-all duration-200 focus-within:border-brand-orange focus-within:ring-2 focus-within:ring-brand-orange group">
-                            <input type="radio" name="decision" value="reject_to_crew" class="h-0 w-0 opacity-0 peer">
-                            <div class="flex items-center gap-2 mb-1">
-                                <i class="fa-solid fa-rotate-left text-gray-400 group-hover:text-brand-orange peer-checked:text-brand-orange transition-colors text-xl"></i>
-                                <span class="font-bold text-gray-900 peer-checked:text-brand-orange">Reject to Workers Team</span>
+                        <label class="relative block pointer h-full">
+                            <input type="radio" name="decision" value="reject_to_crew" class="peer sr-only">
+                            <div class="flex flex-col p-4 border-2 border-gray-200 rounded-lg transition-all duration-200 hover:bg-orange-50 hover:border-orange-400 peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:shadow-sm peer-checked:[&_.icon]:text-orange-600 peer-checked:[&_.title]:text-orange-800">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <i class="fa-solid fa-rotate-left text-gray-400 transition-colors text-xl icon"></i>
+                                    <span class="font-bold text-gray-900 title">Reject to Workers Team</span>
+                                </div>
+                                <span class="text-xs text-gray-500">Send back to "In Progress".</span>
                             </div>
-                            <span class="text-xs text-gray-500">Send back to "In Progress".</span>
-                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-brand-orange rounded-lg pointer-events-none"></div>
+
                         </label>
 
-                        <label class="relative flex flex-col p-4 pointer border-2 border-gray-200 rounded-lg hover:bg-red-50 hover:border-red-500 transition-all duration-200 focus-within:border-red-500 focus-withing:ring-1 focus-within:ring-red-500 group">
-                            <input type="radio" name="decision" value="reject_to_dispatcher" class="h-0 w-0 opacity-0 peer">
-                            <div class="flex items-center gap-2 mb-1">
-                                <i class="fa-solid fa-headset text-gray-400 group-hover:text-red-500 peer-checked:text-red-500 text-lg"></i>
-                                <span class="font-bold text-gray-900 peer-checked:text-red-500">Reject to Dispatchers</span>
+                        <label class="relative block pointer h-full">
+                            <input type="radio" name="decision" value="reject_to_dispatcher" class="peer sr-only">
+                            <div class="flex flex-col p-4 border-2 border-gray-200 rounded-lg transition-all duration-200 hover:bg-red-50 hover:border-red-400 peer-checked:border-red-500 peer-checked:bg-red-50 peer-checked:shadow-sm peer-checked:[&_.icon]:text-red-600 peer-checked:[&_.title]:text-red-800">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <i class="fa-solid fa-headset text-gray-400 transition-colors text-xl icon"></i>
+                                    <span class="font-bold text-gray-900 title">Reject to Dispatchers Team</span>
+                                </div>
+
+                                <span class="text-xs text-gray-500">Remove crew, reset to "Pending".</span>
                             </div>
-                            <span class="text-xs text-gray-500">Remove crew, reset to "Pending".</span>
-                            <div class="absolute inset-0 border-2 border-transparent peer-checked:border-red-500 rounded-lg pointer-events-none"></div>
+
                         </label>
 
-                        <label class="relative flex flex-col p-4 pointer border-2 border-gray-200 rounded-lg hover:bg-gray-100 hover:border-gray-600 transition-all duration-200 focus-within:border-gray-600 focus-withing:ring-1 focus-within:ring-gray-600 group">
-                            <input type="radio" name="decision" value="reject_complaint" class="h-0 w-0 opacity-0 peer">
-                            <div class="flex items-center gap-2 mb-1">
-                                <i class="fa-solid fa-ban text-gray-400 group-hover:text-gray-600 peer-checked:text-gray-600 text-lg"></i>
-                                <span class="font-bold text-gray-900 peer-checked:text-gray-600">Reject Complaint</span>
+                        <label class="relative block pointer h-full">
+                            <input type="radio" name="decision" value="reject_complaint" class="peer sr-only">
+                            <div class="flex flex-col p-4 border-2 border-gray-200 rounded-lg transition-all duration-200 hover:bg-gray-50 hover:border-gray-400 peer-checked:border-gray-500 peer-checked:bg-gray-50 peer-checked:shadow-sm peer-checked:[&_.icon]:text-gray-600 peer-checked:[&_.title]:text-gray-800">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <i class="fa-solid fa-ban text-gray-400 text-xl icon"></i>
+                                    <span class="font-bold text-gray-900 title">Reject The Whole Complaint</span>
+                                </div>
+
+                                <span class="text-xs text-gray-500">Mark "Rejected" (scam/invalid).</span>
                             </div>
-                            <span class="text-xs text-gray-500">Mark "Rejected" (scam/invalid).</span>
                             <div class="absolute inset-0 border-2 border-transparent peer-checked:border-gray-600 rounded-lg pointer-events-none"></div>
                         </label>
                     </div>
