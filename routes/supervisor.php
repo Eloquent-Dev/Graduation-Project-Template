@@ -7,8 +7,11 @@ Route::middleware(['auth','role:supervisor'])->prefix('supervisor')->name('super
     Route::get('job-orders/{jobOrder}/complete',[SupervisorController::class,'createCompletionReport'])
     ->name('completion.create');
 
-    Route::get('/my-reports',[CompletionReportController::class,'index'])->name('reports.index');
-route::get('/my-reports/{completionReport}',[CompletionReportController::class,'show'])->name('reports.show');
+    Route::get('/my-reports',[CompletionReportController::class,'index'])
+    ->name('reports.index');
+
+    Route::get('/my-reports/{completionReport}',[CompletionReportController::class,'show'])
+    ->name('reports.show');
 
 
     Route::post('job-orders/{jobOrder}/complete',[SupervisorController::class,'storeCompletionReport'])

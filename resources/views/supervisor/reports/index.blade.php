@@ -59,9 +59,9 @@
                                     $status=$report -> jobOrder -> status;
                                 @endphp
                                 @if ($status === 'under_review')
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-yellow-400 text-xs font-bold rounded-md border border-yellow-200">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-purple-400 text-xs font-bold rounded-md border border-purple-200">
                                         <i class="fa-solid fa-hourglass-half "></i>
-                                        Pending Review
+                                        Under Review
                                     </span>
                                 @elseif ($status === 'resolved')
                                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-400 text-xs font-bold rounded-md border border-green-200">
