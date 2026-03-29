@@ -71,7 +71,7 @@
             const ctx = document.getElementById('timeChart').getContext('2d');
             const labels = {!! json_encode($chartLabels) !!};
             const data = {!! json_encode($chartData) !!};
-            if (lable.length === 0) {
+            if (labels.length === 0) {
                 document.getElementById('timeChart').parentElement.innerHTML = `
                 <div class="flex flex-col items-center justify-center h-full text-gray-400">
                     <i class ="fa-solid fa-chart-line text-4xl mb-3 text-gray-300"></i>
@@ -112,7 +112,7 @@
                     },
                     scales: {
                         y: {
-                            benginAtZero: true,
+                            beginAtZero: true,
                             title: {
                                 display: true,
                                 text: 'Hours Elapsed',
@@ -142,4 +142,3 @@
         });
     </script>
 </x-layout>
-

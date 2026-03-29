@@ -26,14 +26,19 @@ class DashboardController extends Controller
 
             foreach ($items as $item)
             {
-                $hours = $item->created_at->diffInHours($item->updated_at);
+                if($status === 'pending'){
+                    $hours = $item->created_at->diffInHours(now());
+                }
+                else{
+                    $hours = $item->created_at->diffInHours($item->updated_at);
+                }
                 $totalHours += $hours;
                 $count++;
 
             }
             $averageHours = $count > 0 ? round($totalHours / $count, 1) : 0;
 
-            $chartLables[] = ucwords(str_replace('_',' ',$status));
+            $chartLabels[] = ucwords(str_replace('_',' ',$status));
             $chartData[] = $averageHours;
             }
         return view('dashboard',compact('user','stats','chartLabels','chartData'));
