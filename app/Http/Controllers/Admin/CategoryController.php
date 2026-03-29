@@ -11,8 +11,8 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::withCount('complaints')
-        ->orderBy('name' , 'asc')
-        ->get();
+        ->orderBy('id' , 'asc')
+        ->paginate(15);
         return view('categories.index', compact('categories'));
     }
      public function show(Category $category){
