@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('admin_reports', function (Blueprint $table) {
             $table->id();
-            $table->enum('report_type', ['monthly','overdue']);
+            $table->string('title');
+            $table->json('metrics');
             $table->foreignId('generated_by')->constrained('employees')->onDelete('cascade');
             $table->timestamps();
         });

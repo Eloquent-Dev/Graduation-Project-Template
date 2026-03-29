@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\ReportController;
 
 Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group(function(){
 
@@ -14,4 +15,9 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group
     Route::patch('/users/{user}/role',[UsersController::class,'updateRole'])->name('users.update_role');
     Route::delete('/users/{user}',[UsersController::class,'destroy'])->name('users.destroy');
     Route::patch('/users/{user}/division',[UsersController::class,'updateDivision'])->name('users.update_division');
+
+    //Report Generation Routes
+    Route::get('/reports',[ReportController::class,'index'])->name('reports.index');
+    Route::post('/reports/generate',[ReportController::class,'generate'])->name('reports.generate');
+    Route::get('/reports/{report}',[ReportController::class,'show'])->name('reports.show');
 });

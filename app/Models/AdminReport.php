@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class AdminReport extends Model
 {
 
-protected $fillable = [
-    'report_type',
-    'generated_by',
-];
-    public function employee(){
+protected $fillable = [ 'title', 'metrics', 'generated_by' ];
+
+protected $casts = ['metrics' => 'array'];
+    public function generator(){
         return $this->belongsTo(Employee::class, 'generated_by');
     }
 }
