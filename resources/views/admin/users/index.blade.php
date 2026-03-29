@@ -70,6 +70,7 @@
                             <th class="p-4 font-bold">User Identity</th>
                             <th class="p-4 font-bold">Contact & ID</th>
                             <th class="p-4 font-bold">System Role</th>
+                            <th class="p-4 font-bold">Divison / Team</th>
                             <th class="p-4 font-bold text-right">Danger Zone</th>
                         </tr>
                     </thead>
@@ -113,7 +114,7 @@
                                         </select>
 
                                         @if ($user->id !== auth()->id())
-                                            <button type="submit" class="text-xs bg-gray-100 hover:bg-brand-blue hover:text-white text-gray-600 px-2 py-1.5 rounded transition" title="Save Role">
+                                            <button type="submit" class="text-xs bg-gray-100 hover:bg-brand-blue hover:text-white text-gray-600 px-2 py-1.5 rounded transition pointer" title="Save Role">
                                                 <i class="fa-solid fa-check"></i>
                                             </button>
                                         @else
@@ -121,13 +122,37 @@
                                         @endif
                                     </form>
                                 </td>
+                                <td class="p-4">
+                                    @if(in_array($user->role,['dispatcher','worker','supervisor','admin']))
+                                        <form action="{{ route('admin.users.update_division',$user->id) }}" method="POST" class="flex items-center gap-2">
+                                            @csrf
+                                            @method('PATCH')
+
+                                            <select name="division_id" class="text-sm border-gray-300 rounded-md focus:ring-brand-blue focus:border-brand-blue py-1.5 pl-3 pr-8 shadow-sm bg-blue-50/50">
+                                                <option value="">-- Unassigned --</option>
+                                                @foreach ($divisions as $division)
+                                                    <option value="{{ $division->id }}" {{ $user->employee->division_id == $division->id ? 'selected':'' }}>{{ $division->name }}</option>
+                                                @endforeach
+                                            </select>
+
+                                            <button type="submit" class="text-xs bg-gray-100 hover:bg-brand-blue hover:text-white text-gray-600 px-2 py-1.5 rounded transition pointer" title="Save Division">
+                                                <i class="fa-solid fa-check"></i>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <div class="flex items-center gap-2 text-gray-400 opacity-70">
+                                            <i class="fa-solid fa-minus text-xs"></i>
+                                            <span class="text-xs font-medium italic">Not Applicable</span>
+                                        </div>
+                                    @endif
+                                </td>
                                 <td class="p-4 text-right">
                                     @if($user->id !== auth()->id())
                                         <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('WARNING: Are you sure you want to permanently delete {{ $user->name }}? This action isn\'t reversable.');">
                                             @csrf
                                             @method('DELETE')
 
-                                            <button class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition border border-red-100 hover:border-red-500 pointer" title="Delete User" type="submit">
+                                            <button class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition border border-red-100 hover:border-red-500 pointer" title="Delete User">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </button>
                                         </form>

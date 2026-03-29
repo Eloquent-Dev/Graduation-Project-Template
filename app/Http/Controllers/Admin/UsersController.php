@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Division;
 
 class UsersController extends Controller
 {
     public function index(Request $request){
-        $query = User::query();
+        $query = User::with('employee');
 
         if($request->filled('search')){
             $searchTerm = '%' . $request->search . '%';
@@ -33,7 +34,9 @@ class UsersController extends Controller
             'citizens' => User::where('role','citizen')->count()
         ];
 
-        return view('admin.users.index', compact('users','stats'));
+        $divisions = Division::orderBy('name')->get();
+
+        return view('admin.users.index', compact('users','stats','divisions'));
     }
 
     public function updateRole(Request $request,User $user){
@@ -49,6 +52,22 @@ class UsersController extends Controller
         $user->update(['role' => $validated['role']]);
 
         return back()->with('success',"{$user->name}'s role has been updated from {$oldRole} to {$validated['role']}.");
+    }
+
+    public function updateDivision(Request $request,User $user){
+        if(!in_array($user->role,['dispatcher','worker','supervisor','admin'])){
+            return back()->with('error','Divisions can only be assigned to employees');
+        }
+
+        $validated = $request->validate([
+            'division_id' => 'nullable|exists:divisions,id'
+        ]);
+
+        $user->employee()->update(['division_id' => $validated['division_id']]);
+
+        $divisionName = Division::find($validated['division_id'])->name;
+
+        return back()->with('success',"{$user->name} has been successfully assigned to: {$divisionName}.");
     }
 
     public function destroy(User $user){
