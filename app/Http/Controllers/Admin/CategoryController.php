@@ -15,4 +15,17 @@ class CategoryController extends Controller
         ->get();
         return view('categories.index', compact('categories'));
     }
+     public function show(Category $category){
+       $stats=[
+        'total' => $category->complaints()->count(),
+        'pending' => $category->complaints()->where('status','pending')->count(),
+        'in_progress' => $category->complaints()->whereIn('status',['in_progress','under_review'])->count(),
+        'resolved' => $category->complaints()->whereIn('status',['approved','resolved'])->count(),
+       ];
+       $complaints = $category->complaints()
+       ->with(['user'])
+       ->orderBy('created_at','desc')
+       ->paginate(15);
+         return view('categories.show',compact('category','stats','complaints'));
+    }
 }

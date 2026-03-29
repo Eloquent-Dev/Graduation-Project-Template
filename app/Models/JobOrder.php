@@ -17,6 +17,7 @@ class JobOrder extends Model
         'closed_at',
         'closed_by',
         'closure_reason',
+        'return_reason',
         'complaint_id',
         'status',
         'priority',

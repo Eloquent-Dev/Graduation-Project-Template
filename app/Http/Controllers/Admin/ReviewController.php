@@ -54,7 +54,7 @@ class ReviewController extends Controller
 
             case 'reject_to_crew':
 
-                $jobOrder->update(['status'=>'in_progress']);
+                $jobOrder->update(['status'=>'in_progress','return_reason' => $notes]);
                 $jobOrder->complaint->update(['status' => 'in_progress']);
 
                 if($jobOrder->completionReport){
