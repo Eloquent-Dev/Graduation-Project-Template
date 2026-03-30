@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\CategoryController;
 
 Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group(function(){
 
@@ -20,4 +21,8 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group
     Route::get('/reports',[ReportController::class,'index'])->name('reports.index');
     Route::post('/reports/generate',[ReportController::class,'generate'])->name('reports.generate');
     Route::get('/reports/{report}',[ReportController::class,'show'])->name('reports.show');
+
+    //Category Management Routes
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 });

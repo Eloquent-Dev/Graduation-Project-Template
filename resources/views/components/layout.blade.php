@@ -49,7 +49,7 @@
                     <a href="{{ route('admin.users.index') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                         <i class="fa-solid fa-users w-5 text-center"></i> Users
                     </a>
-                    <a href="#" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
+                    <a href="{{ route('admin.categories.index') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                         <i class="fa-solid fa-layer-group w-5 text-center"></i> Categories
                     </a>
                     <a href="{{ route('admin.reports.index') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">

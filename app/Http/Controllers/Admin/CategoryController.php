@@ -13,7 +13,7 @@ class CategoryController extends Controller
         $categories = Category::withCount('complaints')
         ->orderBy('id' , 'asc')
         ->paginate(15);
-        return view('categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
      public function show(Category $category){
        $stats=[
@@ -26,6 +26,6 @@ class CategoryController extends Controller
        ->with(['user'])
        ->orderBy('created_at','desc')
        ->paginate(15);
-         return view('categories.show',compact('category','stats','complaints'));
+         return view('admin.categories.show',compact('category','stats','complaints'));
     }
 }
