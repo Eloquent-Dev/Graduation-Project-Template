@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Division;
+use App\Models\Employee;
 
 class UsersController extends Controller
 {
@@ -49,7 +50,15 @@ class UsersController extends Controller
         ]);
 
         $oldRole = $user->role;
-        $user->update(['role' => $validated['role']]);
+        $newRole = $validated['role'];
+        if($oldRole === 'citizen'){
+            Employee::firstOrCreate([
+                'user_id' => $user->id
+            ]);
+        }else if( in_array($oldRole,['dispatcher','admin','supervisor','worker']) && $newRole === 'citizen'){
+            $user->employee()->delete();
+        }
+        $user->update(['role' => $newRole]);
 
         return back()->with('success',"{$user->name}'s role has been updated from {$oldRole} to {$validated['role']}.");
     }
