@@ -32,6 +32,6 @@ Route::middleware('auth')->group(function(){
     Route::get('/citizen/profile',[CitizenProfileController::class,'show'])->name('citizen.profile.show');
 
     Route::get('/citizen/profile/edit',[CitizenProfileController::class,'edit'])->name('citizen.profile.edit');
-    Route::post('/citizen/profile/update',[CitizenProfileController::class,'update'])->name('citizen.profile.update');
+    Route::patch('/citizen/profile/update',[CitizenProfileController::class,'update'])->name('citizen.profile.update');
 
 });
