@@ -62,7 +62,7 @@
                     @auth
                     <div class="mt-auto">
                         <div class="border-t border-white my-4 flex items-end"></div>
-                    <a href="{{ route('citizen.profile.show') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
+                    <a href="{{ auth()->user()->employee ? route('employee.profile.show') : route('citizen.profile.show') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                        <i class="fa-solid fa-gear"></i> Profile Settings
                     </a>
                     </div>

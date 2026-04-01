@@ -68,14 +68,14 @@
                     <a href="{{ route('citizen.profile.show') }}" class="px-5 py-2.5 text-sm font-bold border text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition">
                         Cancel</a>
 
-                    <button type="submit" class="px-6 py-2.5 bg-brand-blue hover:bg-blue-800 text-white font-bold rounded-xl hover:shadow-lg transition flex items-center gap-2">
+                    <button type="submit" class="px-6 py-2.5 bg-brand-blue hover:bg-blue-800 text-white font-bold rounded-xl hover:shadow-lg transition flex items-center gap-2 pointer">
                         <i class="fa-solid fa-floppy-disk"></i> Save Changes
                     </button>
                 </div>
             </form>
             </div>
-            
+
         </div>
     </div>
-   
+
 </x-layout>

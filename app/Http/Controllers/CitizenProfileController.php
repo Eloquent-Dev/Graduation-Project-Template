@@ -48,16 +48,23 @@ class CitizenProfileController extends Controller
     public function updatePassword(Request $request)
     {
 
-        $validated = $request->validate([
-            'current_password' => ['required', 'current_password'],
-            'new_password' => ['required', 'confirmed', Password::defaults()],
+        $user = $request->user();
+        $rule = [
+            'new_password' => ['required','confirmed',Password::defaults()],
+        ];
+
+        if($user->password){
+            $rule['current_password'] = ['required', 'current_password'];
+        }
+
+        $validated = $request->validate($rule);
+
+        $user->update([
+            'password' => $validated['new_password'],
         ]);
 
-        $request->user()->update([
-            'password' => Hash::make($validated['new_password']),
-        ]);
-
-        return redirect()->route('citizen.profile.show')->with('success', 'Your password updated successfully.');
+        return redirect()->route('citizen.profile.show')
+        ->with('success', 'Your password updated successfully.');
     }
 
 }
