@@ -151,10 +151,11 @@
                                         <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('WARNING: Are you sure you want to permanently delete {{ $user->name }}? This action isn\'t reversable.');">
                                             @csrf
                                             @method('DELETE')
-
+                                            @if($user->role !== 'admin')
                                             <button class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition border border-red-100 hover:border-red-500 pointer" title="Delete User">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </button>
+                                            @endif
                                         </form>
                                     @endif
                                 </td>
