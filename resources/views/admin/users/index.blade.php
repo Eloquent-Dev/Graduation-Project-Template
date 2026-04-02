@@ -71,6 +71,7 @@
                             <th class="p-4 font-bold">Contact & ID</th>
                             <th class="p-4 font-bold">System Role</th>
                             <th class="p-4 font-bold">Divison / Team</th>
+                            <th class="p-4 font-bold">Complaints</th>
                             <th class="p-4 font-bold text-right">Danger Zone</th>
                         </tr>
                     </thead>
@@ -145,6 +146,11 @@
                                             <span class="text-xs font-medium italic">Not Applicable</span>
                                         </div>
                                     @endif
+                                </td>
+                                <td class="p-4">
+                                    <a href="{{ route('admin.users.complaints', $user->id) }}" class="inline-block items-center gap-1.5 bg-blue-50 hover:bg-blue-100 text-brand-blue border border-blue-200 px-2 py-1.5 rounded-lg text-xs font-bold transition shadow-sm">
+                                        View Complaints
+                                    </a>
                                 </td>
                                 <td class="p-4 text-right">
                                     @if($user->id !== auth()->id())

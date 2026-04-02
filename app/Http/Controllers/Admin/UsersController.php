@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Complaint;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Division;
 use App\Models\Employee;
+use App\Models\Category;
 
 class UsersController extends Controller
 {
@@ -84,6 +86,28 @@ class UsersController extends Controller
         }
 
         return redirect()->route('admin.users.index')->with('success',$message);
+    }
+
+    public function complaints(User $user){
+        $categories = Category::all();
+        $complaints = $user->complaint()->orderBy('id', 'asc')->paginate(15);
+
+        return view('admin.users.complaints',compact('user','complaints','categories'));
+    }
+
+    public function updateDetails(Request $request, Complaint $complaint){
+
+        $validated = $request->validate([
+            'category_id' => 'nullable|exists:categories,id',
+            'status' => 'required|in:pending,under_review,approved,reopened,in_progress,resolved,rejected'
+        ]);
+
+        $complaint->update([
+            'category_id' => $validated['category_id'],
+            'status' => $validated['status']
+        ]);
+
+        return back()->with('success', 'Complaint Details Updated Successfully.');
     }
 
     public function destroy(User $user){
