@@ -89,10 +89,27 @@ class UsersController extends Controller
     }
 
     public function complaints(User $user){
-        $categories = Category::all();
+        if($user->complaint()->count() > 0){
+            $categories = Category::all();
+        }else{
+            $categories = [];
+        }
         $complaints = $user->complaint()->orderBy('id', 'asc')->paginate(15);
 
-        return view('admin.users.complaints',compact('user','complaints','categories'));
+        return view('admin.users.complaints.index',compact('user','complaints','categories'));
+    }
+
+    public function showComplaint(Complaint $complaint){
+        $complaint->load('user');
+        session()->put('complaint_id', $complaint->id);
+
+        return view('admin.users.complaints.show', compact('complaint'));
+    }
+
+    public function showProfile(User $user,Complaint $complaint){
+        $user->load('employee.division');
+
+        return view('admin.users.profile.show', compact('user','complaint'));
     }
 
     public function updateDetails(Request $request, Complaint $complaint){

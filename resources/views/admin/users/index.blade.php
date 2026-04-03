@@ -148,7 +148,7 @@
                                     @endif
                                 </td>
                                 <td class="p-4">
-                                    <a href="{{ route('admin.users.complaints', $user->id) }}" class="inline-block items-center gap-1.5 bg-blue-50 hover:bg-blue-100 text-brand-blue border border-blue-200 px-2 py-1.5 rounded-lg text-xs font-bold transition shadow-sm">
+                                    <a href="{{ route('admin.users.complaints.index', $user->id) }}" class="inline-block items-center gap-1.5 bg-blue-50 hover:bg-blue-100 text-brand-blue border border-blue-200 px-2 py-1.5 rounded-lg text-xs font-bold transition shadow-sm">
                                         View Complaints
                                     </a>
                                 </td>

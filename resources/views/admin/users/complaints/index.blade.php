@@ -66,7 +66,7 @@
                                     {{ $complaint->created_at->format('M d, Y') }}
                                 </td>
                                 <td class="p-4 text-right">
-                                    <a href="" class="text-brand-blue hover:underline text-sm font-bold">View Ticket</a>
+                                    <a href="{{ route('admin.users.complaints.show',$complaint->id) }}" class="text-brand-blue hover:underline text-sm font-bold">View Ticket</a>
                                 </td>
                             </tr>
                         @empty

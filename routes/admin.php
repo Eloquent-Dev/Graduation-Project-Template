@@ -16,8 +16,10 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group
     Route::patch('/users/{user}/role',[UsersController::class,'updateRole'])->name('users.update_role');
     Route::delete('/users/{user}',[UsersController::class,'destroy'])->name('users.destroy');
     Route::patch('/users/{user}/division',[UsersController::class,'updateDivision'])->name('users.update_division');
-    Route::get('/users/{user}/complaints',[UsersController::class,'complaints'])->name('users.complaints');
+    Route::get('/users/{user}/complaints',[UsersController::class,'complaints'])->name('users.complaints.index');
     Route::patch('/complaints/{complaint}/update',[UsersController::class,'updateDetails'])->name('users.complaints.update');
+    Route::get('/users/complaints/{complaint}',[UsersController::class,'showComplaint'])->name('users.complaints.show');
+    Route::get('/users/{user}/profile',[UsersController::class,'showProfile'])->name('users.showProfile');
 
     //Report Generation Routes
     Route::get('/reports',[ReportController::class,'index'])->name('reports.index');
