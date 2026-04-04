@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Listeners\SetEmployeeOffDutyOnLogout;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 use SocialiteProviders\Microsoft\MicrosoftExtendSocialite;
+use Illuminate\Auth\Events\Logout;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,7 +26,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Event::listen(
             SocialiteWasCalled::class,
-            [MicrosoftExtendSocialite::class, 'handle']
+            [MicrosoftExtendSocialite::class, 'handle'],
+        );
+
+        Event::listen(
+            Logout::class,
+            SetEmployeeOffDutyOnLogout::class
         );
     }
 }

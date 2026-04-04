@@ -138,14 +138,14 @@
                         </div>
                     </div>
                         @if (auth()->user()->employee)
-                            <div class="flex items-center gap-3 border-r border-white/20 pr-4 mr-2 hidden sm:flex">
+                            <div class="flex items-center gap-3 border-l border-white/20 pl-4 ml-2 hidden sm:flex">
                                 <span class="text-[10px] font-bold text-white uppercase tracking-wider" id="duty-status-text">
                                     {{ auth()->user()->employee->duty_status === 'on_duty' ? 'On Duty' : 'Off Duty' }}
                                 </span>
 
                                 <button type="button" id="duty-toggle-btn"
                                 data-url="{{ route('employee.toggle-duty') }}"
-                                class="relative inline-flex h-6 w-12 shrink-0 pointer rounded-full border-2 border-transparent transition-colors duration-300 ease-in-out focus:outline-none shadow-inner {{ auth()->user()->employee->duty_status === 'on_duty' ? 'bg-linear-to-r from-green-300 to-blue-400' : 'bg-gray-400/50' }}"
+                                class="relative flex h-6 w-12 shrink-0 pointer rounded-full border-2 border-gray-900 transition-colors duration-300 ease-in-out focus:outline-none shadow-inner {{ auth()->user()->employee->duty_status === 'on_duty' ? 'bg-linear-to-r from-green-300 to-blue-400' : 'bg-gray-400/50' }}"
                                 role="switch"
                                 aria-checked="{{ auth()->user()->employee->duty_status === 'on_duty' ? 'true' : 'false' }}">
 
