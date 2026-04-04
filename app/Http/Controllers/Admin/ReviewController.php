@@ -67,7 +67,7 @@ class ReviewController extends Controller
             case 'reject_to_dispatcher' :
 
                 $jobOrder->update(['status'=>'pending']);
-                $jobOrder->complaint->update(['pending']);
+                $jobOrder->complaint->update(['status'=>'pending']);
 
                 $jobOrder->workers()->detach();
 
@@ -91,6 +91,6 @@ class ReviewController extends Controller
                 break;
         }
 
-        return redirect()->route('admin.reviews.index')->with($message);
+        return redirect()->route('admin.reviews.index')->with('success',$message);
     }
 }
