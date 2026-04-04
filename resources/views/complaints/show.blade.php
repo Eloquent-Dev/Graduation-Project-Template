@@ -67,8 +67,8 @@
     </div>
 
     {{-- Forced Feedback Form --}}
-    @if ($complaint->status=== 'approved' && !$complaint->feedback())
-    <div id="feedback-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-gray-900/80 bg-opacity-75 backdrop-blur-sm px-4">
+
+    <div id="feedback-modal" class="{{  $complaint->status !== 'approved' && $complaint->feedback() ? 'hidden': '' }} fixed inset-0 z-50 flex items-center justify-center bg-gray-900/80 bg-opacity-75 backdrop-blur-sm px-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 transform transition-all border border-gray-100">
             <div class="text-center mb-6">
                 <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 text-green-600 rounded-full mb-4">
@@ -77,33 +77,39 @@
                 <h3 class="text-2xl font-bold text-gray-900">Resolution Feedback!</h3>
                 <p class="text-gray-500 mt-2">Please rate our service to continue</p>
             </div>
-            <form action="{{ route('complaints.feedback', $complaint) }}" method="POST" id="feedback-form " class="space-y-6">
+            <form action="{{ route('feedback.store', $complaint) }}" method="POST" id="feedback-form " class="space-y-8">
                 @csrf
                 {{-- Star rating for quality --}}
-                <div class="mb-6">
-                    <label class="block text-sm font-bold text-gray-400 mb-2">Overall Quality:</label>
-                    <div class="flex flex-row-reverse items-center gap-2 text-3xl">
-                        @for ($i = 5; $i >= 0; $i-=0.5)
-                            <input type="radio" id="q-{{ $i }}" name="rating" value="{{ $i }}" class="hidden peer" required>
-                            <label for="q-{{ $i }}" class="cursor-pointer text-gray-300 peer-hover:text-yellow-400 peer-checked:text-yellow-400 transition-color">
-                                <i class="fa-solid fa-star"></i>
-                            </label>
+                <div class="text-center">
+                    <label class="block text-sm font-bold text-gray-400 mb-3">Overall Quality:</label>
+                    <div class="flex justify-center gap-2 star-rating-container text-3xl" data-target="quality-input">
+                        @for ($i = 1;$i<=5; $i++)
+                            <div class="relative w-8 h-8 pointer star-wrapper">
+                                <i class="fa-solid fa-star text-3xl text-gray-300 absolute left-0 top-0 w-8 text-center"></i>
+                                <div class="top-0 left-0 absolute h-full overflow-hidden star-fill pointer-events-none transition-all duration-75" style="width:0%;">
+                                    <i class="fa-solid fa-star text-3xl text-yellow-400 w-8 text-center"></i>
+                                </div>
+                            </div>
                         @endfor
                     </div>
+                    <input type="hidden" name="rating" id="quality-input" required>
                 </div>
                 {{--star rating for speed--}}
-                <div class="mb-6">
-                    <label class="block text-sm font-bold text-gray-400 uppercase tracking-wider mb-3 text-center">Resolution speed:</label>
-                    <div class="flex flex-row-reverse items-center gap-2 text-2xl text-gray-300">
-                        @for ($i = 5; $i >= 0; $i-=0.5)
-                            <input type="radio" id="s-{{ $i }}" name="speed_rating" value="{{ $i }}" class="hidden peer" required>
-                            <label for="s-{{ $i }}" class="cursor-pointer text-gray-300 peer-hover:text-brand-orange peer-checked:text-brand-orange transition-color">
-                                <i class="fa-solid fa-star"></i>
-                            </label>
+                <div class="text-center">
+                    <label class="block text-sm font-bold text-gray-400 mb-3">Resolution speed:</label>
+                    <div class="flex justify-center gap-2 star-rating-container" data-target="speed-input">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <div class="relative w-8 h-8 pointer star-wrapper">
+                                <i class="fa-solid fa-star text-3xl text-gray-300 absolute top-0 left-0 w-8 text-center"></i>
+                                <div class="absolute top-0 left-0 h-full overflow-hidden star-fill pointer-events-all transition-all duration-75" style="width: 0%">
+                                    <i class="fa-solid fa-star text-3xl text-brand-orange w-8 text-center"></i>
+                                </div>
+                            </div>
                         @endfor
                     </div>
+                    <input type="hidden" name="speed_rating" id="speed-input" required>
                 </div>
-                <div class="mb-6">
+                <div class="mb-6 text-left">
                     <label class="block text-xs font-bold text-gray-400 mb-2">Comments:</label>
                     <textarea name="quality_comments" rows="3" class="w-full border-gray-200 rounded-xl p-3 text-sm focus:ring-brand-blue focus:border-brand-blue" placeholder="Tell us more..."></textarea>
                 </div>
@@ -113,7 +119,7 @@
             </form>
         </div>
     </div>
-    @endif
+
 
     <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps_key') }}&callback=initReadonlyMap&loading=async" async defer></script>
     <script>
@@ -140,17 +146,48 @@
         }
 
         document.addEventListener('DOMContentLoaded', function(){
-            const modal = document.getElementById('feedback-modal');
-            if(modal){
-                modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-                window.addEventListener('keydown', function(e){
-                    if(e.key === 'Escape'){
-                        e.preventDefault();
-                        return false;
-                    }
+            document.querySelectorAll('.star-rating-container').forEach(container =>{
+                const wrappers = container.querySelectorAll('.star-wrapper')
+                const hiddenInput = document.getElementById(container.dataset.target)
+                let currentLockedRating = 0;
+
+                function updateVisuals(rating){
+                    wrappers.forEach((wrapper,index) => {
+                        const fill = wrapper.querySelector('.star-fill')
+                        const starValue = index+1
+
+                        if(rating >= starValue){
+                            fill.style.width = '100%';
+                        }else if(rating ===starValue - 0.5){
+                            fill.style.width = '50%'
+                        }else{
+                            fill.style.width = '0%'
+                        }
+                    });
+                }
+
+                wrappers.forEach((wrapper,index) =>{
+                    wrapper.addEventListener('mousemove', (e)=> {
+                        const rect = wrapper.getBoundingClientRect()
+                        const isHalf = (e.clientX - rect.left) < (rect.width / 2)
+                        const hoverValue = index + (isHalf ? 0.5 : 1)
+                        updateVisuals(hoverValue)
+                    });
+
+                    wrapper.addEventListener('click', (e) => {
+                        const rect = wrapper.getBoundingClientRect()
+                        const isHalf = (e.clientX - rect.left) < (rect.width / 2)
+                        currentLockedRating = index + (isHalf ? 0.5 : 1)
+
+                        hiddenInput.value = currentLockedRating
+                        updateVisuals(currentLockedRating)
+                    });
                 });
-            }
+
+                container.addEventListener('mouseleave', () =>{
+                    updateVisuals(currentLockedRating)
+                })
+            })
         });
     </script>
 
