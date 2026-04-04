@@ -6,6 +6,7 @@ use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CitizenProfileController;
+use App\Http\Controllers\FeedbackController;
 
 
 Route::middleware('auth')->group(function(){
@@ -35,4 +36,7 @@ Route::middleware('auth')->group(function(){
     Route::patch('/citizen/profile/update',[CitizenProfileController::class,'update'])->name('citizen.profile.update');
 
     Route::patch('/citizen/profile/password/update',[CitizenProfileController::class,'updatePassword'])->name('citizen.profile.password.update');
+
+    Route::post('/complaints/{complaint}/feedback',[FeedbackController::class,'store'])
+    ->name('feedback.store');
 });

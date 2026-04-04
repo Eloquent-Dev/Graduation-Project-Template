@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('feedback', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('rating');
+            $table->decimal('rating');
             $table->text('quality_comments')->nullable();
-            $table->unsignedInteger('speed_rating');
+            $table->decimal('speed_rating');
             $table->foreignId('complaint_id')->constrained('complaints')->onDelete('cascade');
             $table->timestamps();
         });
