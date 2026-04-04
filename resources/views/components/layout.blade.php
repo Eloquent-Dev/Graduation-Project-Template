@@ -105,7 +105,7 @@
 
                     <div id="notification-dropdown" class="hidden absolute max-h-112 left-0 mt-4 w-80 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
                         <div class="bg-gray-50 border-b border-gray-100 px-4 py-3 flex justify-between items-center">
-                            <h3 class="text-sm font-bold tetx">Notifications</h3>
+                            <h3 class="text-sm font-bold text-gray-800">Notifications</h3>
                             @if(auth()->user()->unreadNotifications->count() > 0)
                                 {{ auth()->user()->unreadNotifications->count() }} New
                             @endif
@@ -130,7 +130,6 @@
                         @if(auth()->user()->notifications()->count() > 0)
                                 <div class="bg-gray-50 border-t border-gray-100 px-4 py-2 text-center">
                                     <form action="{{ route('notifications.markAllRead') }}" method="get">
-                                        @csrf
                                         <button class="text-xs text-brand-orange font-bold hover:underline pointer" type="submit">Mark all as read</button>
                                     </form>
                                 </div>

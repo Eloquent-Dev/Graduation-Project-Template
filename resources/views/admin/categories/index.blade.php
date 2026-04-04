@@ -8,7 +8,7 @@
                 <p class="text-sm text-gray-500 mt-1">Manage the types of complaints citizens are allowed to submit.</p>
             </div>
             <a href="{{route('admin.categories.create')}}"
-                class="bg-brand-dark hover:bg-gray-900 text-white font-bold px-5 py-2.5 rounded-xl shadow-sm transition flex items-center gap-2 text-sm w-fit">
+                class="bg-brand-blue hover:bg-blue-800 text-white font-bold px-5 py-2.5 rounded-xl shadow-sm transition flex items-center gap-2 text-sm w-fit">
                 <i class="fa-solid fa-plus"></i> Add New Category
             </a>
         </div>
