@@ -59,7 +59,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                            class="text-gray-400 hover:text-red-500 transition p-2 bg-gray-50 hover:bg-red-50 rounded-lg">
+                                            class="text-gray-400 pointer hover:text-red-500 transition p-2 bg-gray-50 hover:bg-red-50 rounded-lg">
                                             <i class="fa-solid fa-trash-can"></i>
                                         </button>
                                         </form>
