@@ -7,19 +7,22 @@
         </a>
 
         <div
-            class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-xl border border-gray-200">
+            class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-xl border border-gray-200 mb-8 shadow-sm">
             <div class="flex items-center gap-4">
                 <div class="bg-blue-50 text-brand-blue p-3 rounded-lg border border-blue-100">
                     <i class="fa-solid fa-layer-group text-2xl"></i>
                 </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">{{ $category->name }}</h1>
+                    <p class="text-sm text-gray-500 mt-1">Manage and track all issues reported</p>
+                </div>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900">{{ $category->name }}</h1>
-            <p class="text-sm text-gray-500 mt-1">Manage and track all issues reported</p>
-        </div>
-        <button
-            class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-lg transition text-sm flex item-center gap-2">
+ <button
+            class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-lg transition text-sm flex item-center gap-2 shrink-0">
             <i class="fa-solid fa-pen"></i> Edit Category
         </button>
+        </div>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
             <div>
@@ -31,8 +34,11 @@
             </div>
         </div>
         <div class="bg-white p-5 rounded-xl border border-yellow-200 shadow-sm flex items-center justify-between">
-            <p class="text-xs font-bold text-yellow-600 uppercase tracking-wider"> Pending Dispatch</p>
-            <p class="text-2xl font-bold text-gray-900 mt-1">{{ $stats['pending'] }}</p>
+            <div>
+                <p class="text-xs font-bold text-yellow-600 uppercase tracking-wider"> Pending Dispatch</p>
+                <p class="text-2xl font-bold text-gray-900 mt-1">{{ $stats['pending'] }}</p>
+            </div>
+
             <div class="w-10 h-10 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-500">
                 <i class="fa-solid fa-clock"></i>
             </div>
@@ -126,4 +132,5 @@
             </div>
         @endif
     </div>
+</div>
 </x-layout>

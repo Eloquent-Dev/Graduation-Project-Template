@@ -55,4 +55,17 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('admin.categories.index')->with('success','Category deleted successfully!');
      }
+     public function edit(Category $category){
+        $divisions = Division::all();
+        return view('admin.categories.edit',compact('category','divisions'));
+     }
+     public function update(Request $request, Category $category){
+        $validated = $request->validate([
+            'name'=> 'required|string|max:255',
+            'allowance_period' => 'required|integer|min:1',
+            'division_id' => 'required|exists:divisions,id',
+        ]);
+        $category->update($validated);
+        return redirect()->route('admin.categories.index')->with('success','Category updated successfully!');
+     }
 }

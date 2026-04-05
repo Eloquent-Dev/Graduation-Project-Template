@@ -52,7 +52,7 @@
                                 <td class="p-4 text-right">
                                     <div class="flex items-center justify-end gap-2">
                                         <a
-                                            class="text-gray-400 hover:text-brand-blue transition p-2 bg-gray-50 hover:bg-blue-50 rounded-lg">
+                                            class="text-gray-400 hover:text-brand-blue transition p-2 bg-gray-50 hover:bg-blue-50 rounded-lg" href="{{ route('admin.categories.edit', $category->id) }}">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                         <form action="{{route('admin.categories.destroy',$category->id)}}" method="post" class="inline">
