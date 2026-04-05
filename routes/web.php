@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Middleware\RequiredCompleteProfile;
+use App\Http\Controllers\LiveTrackingController;
 
 require __DIR__.'/auth.php';
 require __DIR__.'/guest.php';
@@ -25,3 +26,12 @@ Route::get('/complaints/create',[ComplaintController::class,'create'])
 Route::post('/complaints',[ComplaintController::class, 'store'])
 ->middleware(RequiredCompleteProfile::class)
 ->name('complaints.store');
+
+
+Route::middleware(['auth','role:admin,supervisor'])->group(function(){
+    Route::get('/fleet-tracking',[LiveTrackingController::class,'index'])
+    ->name('tracking.index');
+
+    Route::get('/api/worker-locations',[LiveTrackingController::class, 'getWorkerLocations'])
+    ->name('tracking.api.locations');
+});
