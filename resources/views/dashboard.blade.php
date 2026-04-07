@@ -9,13 +9,13 @@
             <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl pointer-events-none">
             </div>
             <div class="relative z-10">
-                <h1 class="text-3xl font-black mb-1">Welcome back ,{{ explode(' ', trim($user->name))[0] }}!</h1>
+                <h1 class="text-3xl font-black mb-1">Welcome back {{ $user->name }}</h1>
                 <p class="text-gray-300 text-sm">Track the progress and resolution times of your submitted
                     issues.</p>
             </div>
 
             <div class="relative z-10 text-sm font-bold text-gray-800 bg-white px-5 py-2.5 rounded-xl shadow-sm">
-                <i class="fa-regular fa-calendar text-brand-blue mr-2"></i> {{ now()->format('l,F j,Y') }}
+                <i class="fa-regular fa-calendar text-brand-blue mr-2"></i> {{ now()->format('l, F jS Y') }}
             </div>
         </div>
 

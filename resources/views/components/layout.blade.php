@@ -57,8 +57,12 @@
                         <i class="fa-solid fa-layer-group w-5 text-center"></i> Categories
                     </a>
                     <a href="{{ route('admin.reports.index') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
-                        <i class="fa-solid fa-chart-line w-5 text-center"></i> Admin Reports
+                        <i class="fa-solid fa-chart-line w-5 text-center"></i> KPI Reports
                     </a>
+                    <a href="{{ route('admin.reviews.index') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
+                        <i class="fa-solid fa-clipboard-check w-5 text-center"></i> Quality Assurance
+                    </a>
+
 
                     @endif
                     <a href="{{ route('complaints.create') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
