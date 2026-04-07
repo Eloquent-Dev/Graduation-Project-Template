@@ -55,7 +55,7 @@
                                             class="text-gray-400 hover:text-brand-blue transition p-2 bg-gray-50 hover:bg-blue-50 rounded-lg" href="{{ route('admin.categories.edit', $category->id) }}">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                        <form action="{{route('admin.categories.destroy',$category->id)}}" method="post" class="inline">
+                                        <form action="{{route('admin.categories.destroy',$category->id)}}" method="post"  onsubmit="return confirm('WARNING: Are you sure you want to permanently delete {{ $category-> name }}? This action isn\'t reversable.');" class="inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
