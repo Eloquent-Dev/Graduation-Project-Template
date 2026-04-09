@@ -8,7 +8,7 @@
             </div>
 
             <div>
-                <i class="fa-solid fa-list-check mr-2"></i> Active Orders: {{ $jobOrders->where('status','pending')->count() }}
+                <i class="fa-solid fa-list-check mr-2"></i> Pending Orders: {{ $jobOrders->where('status','pending')->count() }}
             </div>
         </div>
 
@@ -88,14 +88,14 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 text-right">
-                                        @if(in_array($job->status,['pending']))
+                                        @if($job->status === 'pending')
                                         <a href="{{ route('dispatcher.job_orders.show', $job->id) }}" class="bg-brand-blue hover:bg-blue-800 text-white px-3 py-1.5 rounded text-xs font-bold transition shadow-sm">
                                             Dispatch <i class="fa-solid fa-truck-fast ml-1"></i>
                                         </a>
-                                        @else
-                                            <span class="bg-gray-200 text-gray-500 px-3 py-1.5 rounded text-sm font-bold cursor-not-allowed inline-block border border-gray-300">
-                                                Dispatched <i class="fa-solid fa-lock ml-1"></i>
-                                            </span>
+                                        @elseif($job->status === 'in_progress')
+                                            <a href="{{ route('dispatcher.job_orders.show', $job->id) }}" class="bg-brand-blue hover:bg-blue-800 text-white px-3 py-1.5 pointer rounded text-xs font-bold transition shadow-sm">
+                                                Redispatch <i class="fa-solid fa-arrow-rotate-left ml-1"></i>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>
