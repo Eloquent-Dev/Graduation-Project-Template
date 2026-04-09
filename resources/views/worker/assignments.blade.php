@@ -5,35 +5,7 @@
         @php
             $isWorkerOnDuty = auth()->user()->employee->duty_status === 'on_duty';
         @endphp
-        <div class="mb-8 bg-white p-5 rounded-xl shadow-sm border {{ $isWorkerOnDuty ? 'border-green-200':'border-gray-200' }} flex justify-between items-center transition-colors">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center {{ $isWorkerOnDuty ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500' }}">
-                    <i class="fa-solid fa-user-clock text-xl"></i>
-                </div>
-
-                <div>
-                    <h3 class="font-bold text-gray-800 text-lg">Shift Status</h3>
-                    @if ($isWorkerOnDuty)
-                        <p class="text-sm font-bold text-green-600">Active / On Duty</p>
-                    @else
-                        <p class="text-sm font-bold text-gray-500">Off Duty</p>
-                    @endif
-                </div>
-            </div>
-            <form action="{{ route('worker.duty.toggle') }}" method="post">
-                @csrf
-                @method('PATCH')
-                @if ($isWorkerOnDuty)
-                    <button type="submit" class="pointer bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 px-6 py-2.5 rounded-lg text-sm font-bold transition shadow-sm flex items-center gap-2">
-                        <i class="fa-solid fa-power-off"></i> Clock Out
-                    </button>
-                @else
-                    <button type="submit" class="pointer bg-green-500 hover:bg-green-600 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow-sm transition flex items-center gap-2">
-                        <i class="fa-solid fa-power-off"></i> Clock In
-                    </button>
-                @endif
-            </form>
-        </div>
+        
         <div class="flex justify-between items-end border-b border-gray-200 pb-5 mb-8">
             <div>
                 <h2 class="text-3xl font-bold text-brand-dark">My Assignments</h2>

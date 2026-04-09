@@ -43,6 +43,9 @@
                     <a href="{{ route('dispatcher.job_orders.index') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                         <i class="fa-solid fa-satellite-dish w-5 text-center"></i> Dispatch Queue
                     </a>
+                    <a href="{{ route('tracking.index') }}"class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
+                        <i class="fa-solid fa-map-location-dot w-5 text-center"></i> Live Tracking
+                    </a>
                     @endif
                     @if(auth()->check() && auth()->user()->role === 'supervisor')
                     <a href="{{ route('supervisor.reports.index') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">

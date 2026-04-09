@@ -28,7 +28,7 @@ Route::post('/complaints',[ComplaintController::class, 'store'])
 ->name('complaints.store');
 
 
-Route::middleware(['auth','role:admin,supervisor'])->group(function(){
+Route::middleware(['auth','role:admin,dispatcher'])->group(function(){
     Route::get('/fleet-tracking',[LiveTrackingController::class,'index'])
     ->name('tracking.index');
 
