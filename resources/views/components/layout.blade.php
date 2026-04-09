@@ -62,9 +62,11 @@
                     <a href="{{ route('admin.reviews.index') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                         <i class="fa-solid fa-clipboard-check w-5 text-center"></i> Quality Assurance
                     </a>
-
-
+                    <a href="{{ route('tracking.index') }}"class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
+                        <i class="fa-solid fa-map-location-dot w-5 text-center"></i> Live Tracking
+                    </a>
                     @endif
+
                     <a href="{{ route('complaints.create') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
                         <i class="fa-solid fa-plus w-5 text-center"></i> Submit Complaint
                     </a>
