@@ -31,7 +31,7 @@
                         <i class="fa-solid fa-file-circle-exclamation w-5 text-center"></i> My Complaints
                     </a>
                     <a href="{{ route('complaints.log') }}" class="px-4 py-3 rounded-md text-sm font-medium text-white hover:text-brand-orange hover:bg-white/5 transition flex items-center gap-3">
-                        <i class="fa-solid fa-user-shield w-5 text-center"></i> My Transaction History
+                        <i class="fa-solid fa-user-clock w-5 text-center"></i> My Transaction History
                     </a>
                     @endauth
                     @if(auth()->check() && in_array(auth()->user()->role,['worker','supervisor']))
