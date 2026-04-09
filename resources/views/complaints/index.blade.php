@@ -2,7 +2,7 @@
     @section('title', 'My Complaints')
 
     <div class="max-w-7xl mx-auto px-6 lg:px-8 py-8 w-full">
-        <div class="flex justify-between items-center border-b border-gray-200 mb-6 pb-5">
+        <div class="flex justify-between items-center border-b border-gray-200 pb-5">
             <div>
                 <h2 class="text-3xl font-bold text-brand-dark">My Complaints</h2>
                 <p class="text-gray-500 text-sm">Track the status of the issues you have submitted.</p>
@@ -13,7 +13,7 @@
         </div>
 
         @if($complaints->isEmpty())
-            <div class="bg-white p-12 rounded-xl shadow-sm border border-gray-100 max-w-2xl mx-auto mt-12 text-center">
+            <div class="bg-white p-12 rounded-xl shadow-sm border border-gray-100 max-w-full mx-auto mt-4 text-center">
                 <div class="w-16 h-16 bg-blue-50 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fa-solid fa-folder-open text-2xl"></i>
                 </div>

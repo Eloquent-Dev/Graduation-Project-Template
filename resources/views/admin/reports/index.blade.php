@@ -2,7 +2,7 @@
     @section('title', 'System KPI Reports')
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8 border-b border-gray-200 pb-5">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">System Performance Reports</h1>
                 <p class="text-sm text-gray-500 mt-1">Generate and review frozen historical snapshots of system KPIs.</p>

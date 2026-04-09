@@ -1,6 +1,8 @@
 <x-layout>
     <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 w-full">
-        <h2 class="text-2xl font-bold mb-6">Pending Job Title Approvals</h2>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full"><div class="flex justify-between items-center border-b border-gray-200 mb-6 pb-5">
+        <h2 class="text-3xl font-bold text-brand-dark">Pending Job Title Approvals</h2>
+        </div>
 
         <div class="bg-white shadow-md rounded-xl overflow-hidden">
             <table class="min-w-full divide-y divide-gray-200 ">

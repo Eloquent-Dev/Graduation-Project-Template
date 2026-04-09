@@ -1,9 +1,13 @@
 <x-layout>
     @section('title','Transaction History')
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-        <h2 class="text-2xl font-bold mb-6 text-gray-800">Your Complaint History</h2>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full"><div class="flex justify-between items-center border-b border-gray-200 mb-6 pb-5">
+            <div>
+                <h2 class="text-3xl font-bold text-brand-dark">My Transactions</h2>
+                <p class="text-gray-500 text-sm">Track the Complaint Transaction History.</p>
+            </div>
 
+        </div>
         <div class="relative ml-3 w-full">
             @forelse ($logs as $log)
             <div class="mb-8 ml-6">
