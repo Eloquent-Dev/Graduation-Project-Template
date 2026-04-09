@@ -14,8 +14,17 @@ public function index()
 
 public function getTrackingData()
 {
-    $jobOrder = JobOrder::has('workers')
+    $jobOrders = JobOrder::has('workers')
     ->with(['workers.user','complaint'])
+    ->whereNotIn('status',['resolved','rejected'])
+    ->orderByRaw("
+        CASE priority
+        WHEN 'high' THEN 1
+        WHEN 'medium' THEN 2
+        WHEN 'low' THEN 3
+        ELSE 4
+        END ASC")
+    ->orderBy('created_at','desc')
     ->get()
     ->map(function($jobOrder){
         return[
@@ -35,6 +44,6 @@ public function getTrackingData()
     })->values()->toArray();
 
 
-    return response()->json($jobOrder);
+    return response()->json($jobOrders);
 }
 }

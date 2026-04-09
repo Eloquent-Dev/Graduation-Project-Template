@@ -32,8 +32,5 @@ Route::middleware(['auth','role:admin,supervisor'])->group(function(){
     Route::get('/fleet-tracking',[LiveTrackingController::class,'index'])
     ->name('tracking.index');
 
-    Route::get('/tarcking-data', [LiveTrackingController::class,'getTrackingData'])->name('tracking.data');
-
-    Route::get('/api/worker-locations',[LiveTrackingController::class, 'getTrackingData'])
-    ->name('tracking.api.locations');
+    Route::get('/tracking-data', [LiveTrackingController::class,'getTrackingData'])->name('tracking.data');
 });
