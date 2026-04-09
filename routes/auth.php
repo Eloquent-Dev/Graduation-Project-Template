@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\oAuth\GoogleController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\NotificationController;
@@ -39,4 +40,6 @@ Route::middleware('auth')->group(function(){
 
     Route::post('/complaints/{complaint}/feedback',[FeedbackController::class,'store'])
     ->name('feedback.store');
+
+    Route::get('/my-history',[LogController::class,'index'])->name('complaints.log');
 });

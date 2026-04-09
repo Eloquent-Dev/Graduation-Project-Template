@@ -72,4 +72,33 @@ class Complaint extends Model
     public function closedBy(){
         return $this->belongsTo(Employee::class, 'closed_by');
     }
+
+    public function logs(){
+        return $this->hasMany(ComplaintLog::class)->orderBy('created_at','desc');
+    }
+
+    protected static function booted(){
+        static::created(function($complaint){
+            $complaint->logs()->create([
+                'user_id' => auth()->id(),
+                'status' => $complaint->status,
+                'title' => 'Complaint Submitted',
+                'description' => 'Your complaint has been successfully received by the system.'
+            ]);
+        });
+
+        static::updated(function($complaint){
+            if($complaint->wasChanged('status')){
+                $oldStatus = $complaint->getOriginal('status');
+                $newStatus = $complaint->status;
+
+                $complaint->logs()->create([
+                    'user_id' => auth()->id(),
+                    'status' => $complaint->status,
+                    'title' => 'Status Updated',
+                    'description' => "Complaint status changed from {$oldStatus} to {$newStatus}"
+                ]);
+            }
+        });
+    }
 }
