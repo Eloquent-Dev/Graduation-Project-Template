@@ -2,10 +2,8 @@
     @section('title', 'My Assignments')
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8">
-        @php
-            $isWorkerOnDuty = auth()->user()->employee->duty_status === 'on_duty';
-        @endphp
-        
+
+
         <div class="flex justify-between items-end border-b border-gray-200 pb-5 mb-8">
             <div>
                 <h2 class="text-3xl font-bold text-brand-dark">My Assignments</h2>
@@ -62,7 +60,7 @@
                                     Assigned {{ $assignment->created_at->diffForHumans() }}
                                 </div>
                             </div>
-                            <div class="p-4 border-t border-gray-100 bg-white space-y-3">
+                            <div class="p-4 border-t border-gray-100 bg-white mt-auto">
                                 <div class="grid grid-cols-2 gap-3">
                                 <a href="https://www.google.com/maps/dir/?api=1&destination={{ $assignment->complaint->latitude }},{{ $assignment->complaint->longitude }}" target="_blank" class="flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-bold rounded-lg transition">
                                     <i class="fa-solid fa-route"></i> Map
@@ -80,16 +78,16 @@
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="worker_status" value="in_route">
-                                        <button type="submit" class="w-full h-full pointer flex items-center justify-center gap-2 px-2 py-2 bg-brand-blue hover:bg-blue-800 text-white text-sm font-bold rounded-lg transition shadow-sm">
+                                        <button type="submit" class="w-full h-full cursor-pointer flex items-center justify-center gap-2 px-2 py-2 bg-brand-blue hover:bg-blue-800 text-white text-sm font-bold rounded-lg transition shadow-sm">
                                             <i class="fa-solid fa-truck"></i> Start Route
                                         </button>
                                     </form>
                                     @elseif($myStatus === 'in_route')
-                                    <form action="{{ route('worker.assignments.status',$assignment->id) }}" method="post">
+                                    <form action="{{ route('worker.assignments.status',$assignment->id) }}" method="post" class="h-full">
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="worker_status" value="on_site">
-                                        <button type="submit" class="w-full h-full pointer flex items-center justify-center gap-2 px-2 py-2 bg-brand-blue hover:bg-blue-800 text-white text-sm font-bold rounded-lg transition shadow-sm">
+                                        <button type="submit" class="w-full h-full cursor-pointer flex items-center justify-center gap-2 px-2 py-2 bg-brand-blue hover:bg-blue-800 text-white text-sm font-bold rounded-lg transition shadow-sm">
                                             <i class="fa-solid fa-location-dot"></i> Arrived
                                         </button>
                                     </form>
