@@ -1,7 +1,7 @@
 <x-layout>
 @section('title','My Completion Reports')
-<div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 w-full">
-    <div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div class="max-w-7xl mx-auto py-10 sm:px-8 lg:px-8 w-full">
+    <div class="flex justify-between items-center border-b border-gray-200 mb-6 pb-5">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">My Completion Reports</h1>
             <p class="text-sm text-gray-500 mt-1">A list of all completion reports you have submitted.</p>
@@ -13,10 +13,10 @@
             </div>
         </div>
         </div>
-        <div class="bg-white rounded-x1 shadow-sm overflow-hidden border border-gray-200">
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">
            @if ($reports->isEmpty())
            <div class="p-12 text-center text-gray-400 flex flex-col items-center">
-               <i class="fa-solid fa-folder-open text-5xl mb-4 text-gray-300"></i>
+               <i class="fa-solid fa-folder-open text-5xl mb-4 text-brand-blue"></i>
                <p class="text-lg font-bold text-gray-600 ">No reports found</p>
                <p class="text-sm mt-1">You have not submitted any completion reports yet.</p>
            </div>

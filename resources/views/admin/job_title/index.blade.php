@@ -1,9 +1,9 @@
 <x-layout>
-    <div class="max-w-6xl mx-auto py-8 px-4">
+    <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 w-full">
         <h2 class="text-2xl font-bold mb-6">Pending Job Title Approvals</h2>
 
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <table class="min-w-full divide-y divide-gray-200">
+        <div class="bg-white shadow-md rounded-xl overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-200 ">
                 <thead>
                     <tr class="bg-gray-50">
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Employee Name</th>
