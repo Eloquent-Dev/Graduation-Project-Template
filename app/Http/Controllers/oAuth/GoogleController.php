@@ -14,7 +14,7 @@ class GoogleController extends Controller
     public function handleGoogleCallback(){
         try{
             /** @var \Laravel\Socialite\Two\User $googleUser */
-        $googleUser = Socialite::driver('google')->user();
+        $googleUser = Socialite::driver('google')->stateless()->user();
 
         $user = User::firstOrCreate(['email' => $googleUser->getEmail()],[
             'name' => $googleUser->getName(),

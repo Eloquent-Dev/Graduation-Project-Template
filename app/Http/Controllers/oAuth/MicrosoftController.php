@@ -14,7 +14,7 @@ class MicrosoftController extends Controller
     public function handleMicrosoftCallback(){
         try{
             /** @var \Laravel\Socialite\Two\User $microsoftUser */
-        $microsoftUser = Socialite::driver('microsoft')->user();
+        $microsoftUser = Socialite::driver('microsoft')->stateless()->user();
 
         $user = User::firstOrCreate(['email' => $microsoftUser->getEmail()],[
             'name' => $microsoftUser->getName(),
@@ -22,13 +22,11 @@ class MicrosoftController extends Controller
             'password'=> bcrypt(Str::random(24)),
         ]);
 
-        session(['needs_oauth_completion' => true]);
-
         Auth::login($user);
 
         return redirect('/')->with('warning','Additional Infromation Needed!');
         }catch(\Exception $e){
-            return redirect('/')->with('Microsoft login failed. Please try again.');
+            return redirect('/')->with('error', 'Microsoft login failed. Please try again.');
         }
     }
 
