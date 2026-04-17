@@ -8,8 +8,8 @@ use App\Http\Controllers\ComplaintController;
 Route::middleware('guest')->group(function(){
     Route::get('login',function(){ return redirect()->route('home')->with('openLoginModal',true);})
     ->name('login');
-    Route::post('login',[AuthController::class,'login'])->name('login.submit');
-    Route::post('register',[AuthController::class,'register'])->name('register');
+    Route::post('login',[AuthController::class,'login'])->name('login.submit')->middleware('throttle:login');
+    Route::post('register',[AuthController::class,'register'])->name('register')->middleware('throttle:register');
 
     Route::get('auth/google/redirect', [GoogleController::class, 'redirectToGoogle'])
     ->name('google.redirect');

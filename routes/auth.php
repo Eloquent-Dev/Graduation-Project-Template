@@ -15,7 +15,7 @@ Route::middleware('auth')->group(function(){
     ->name('logout');
 
     Route::post('/oauth/finish', [GoogleController::class,'finishRegistration'])
-    ->name('oauth.finish');
+    ->name('oauth.finish')->middleware('throttle:oauth');
 
     Route::get('/my-complaints',[ComplaintController::class,'index'])
     ->name('complaints.index');
@@ -36,10 +36,11 @@ Route::middleware('auth')->group(function(){
     Route::get('/citizen/profile/edit',[CitizenProfileController::class,'edit'])->name('citizen.profile.edit');
     Route::patch('/citizen/profile/update',[CitizenProfileController::class,'update'])->name('citizen.profile.update');
 
-    Route::patch('/citizen/profile/password/update',[CitizenProfileController::class,'updatePassword'])->name('citizen.profile.password.update');
+    Route::patch('/citizen/profile/password/update',[CitizenProfileController::class,'updatePassword'])->name('citizen.profile.password.update')->middleware('throttle:password');
 
     Route::post('/complaints/{complaint}/feedback',[FeedbackController::class,'store'])
-    ->name('feedback.store');
+    ->name('feedback.store')
+    ->middleware('throttle:feedback');
 
     Route::get('/my-history',[LogController::class,'index'])->name('complaints.log');
 });

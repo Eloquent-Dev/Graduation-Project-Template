@@ -24,7 +24,7 @@ Route::get('/complaints/create',[ComplaintController::class,'create'])
 ->name('complaints.create');
 
 Route::post('/complaints',[ComplaintController::class, 'store'])
-->middleware(RequiredCompleteProfile::class)
+->middleware(RequiredCompleteProfile::class, 'throttle:complaints')
 ->name('complaints.store');
 
 
@@ -32,5 +32,7 @@ Route::middleware(['auth','role:admin,dispatcher'])->group(function(){
     Route::get('/fleet-tracking',[LiveTrackingController::class,'index'])
     ->name('tracking.index');
 
-    Route::get('/tracking-data', [LiveTrackingController::class,'getTrackingData'])->name('tracking.data');
+    Route::get('/tracking-data', [LiveTrackingController::class,'getTrackingData'])
+    ->name('tracking.data')
+    ->middleware('throttle:tracking-data');
 });
