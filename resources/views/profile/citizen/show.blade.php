@@ -48,12 +48,12 @@
                             <div>
                                 <dt class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Phone Number
                                 </dt>
-                                <dd class="mt-1 text-sm text-gray-900">{{ $user->phone ?? 'Not provided' }}</dd>
+                                <dd class="mt-1 text-sm text-gray-900">{{ $user->phone ?? 'Not Provided' }}</dd>
                             </div>
                             <div>
                                 <dt class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">National ID
                                 </dt>
-                                <dd class="mt-1 text-sm text-gray-900">{{ $user->national_no ?? 'Not provided' }}</dd>
+                                <dd class="mt-1 text-sm text-gray-900">{{ $user->national_no ?? 'Not Provided' }}</dd>
                             </div>
                         </dl>
                     </div>
