@@ -10,6 +10,8 @@ use App\Notifications\newComplaintSubmitted;
 use App\Notifications\ComplaintRecieved;
 use Illuminate\Support\Facades\Notification;
 use App\Models\JobOrder;
+use Str;
+use Illuminate\Support\Facades\Hash;
 
 class ComplaintController extends Controller
 {
@@ -49,15 +51,33 @@ class ComplaintController extends Controller
             $rules['complainant_name'] = 'required|string|max:255';
             $rules['guest_national_no'] = 'required_without:passport_no|nullable|string|max:20';
             $rules['passport_no'] = 'required_without:guest_national_no|nullable|string|max:20';
+            $rules['email'] = 'required|email|max:255';
         }
 
         $validated = $request->validate($rules,[],[
             'complainant_name' => 'Full Name',
             'title' => 'Title',
+            'email' => 'Email Address',
             'guest_national_no' => 'National Number',
             'passport_no' => 'Passport Number',
             'description' => 'Description'
         ]);
+
+        $userId = auth()->id();
+
+        if (!auth()->check()) {
+            $user = User::where('email', $validated['email'])->first();
+            if (!$user) {
+                $user = User::create([
+                    'name' => $validated['complainant_name'],
+                    'email' => $validated['email'],
+                    'national_no' => $validated['guest_national_no'] ?? null,
+                    'passport_no' => $validated['passport_no'] ?? null,
+                    'password' => Hash::make(Str::random(10)),
+                ]);
+            }
+            $userId = $user->id;
+        }
 
         $imagePath = null;
         if($request->hasFile('image')){
@@ -70,11 +90,9 @@ class ComplaintController extends Controller
             'description' => $validated['description'],
             'latitude' => $validated['latitude'],
             'longitude' => $validated['longitude'],
-            'user_id' => auth()->id(),
-            'complainant_name' =>$validated['complainant_name'] ?? null,
-            'guest_national_no' => $validated['guest_national_no'] ?? null,
-            'passport_no' => $validated['passport_no'] ?? null,
-            'image_path' => $imagePath
+            'user_id' => auth()->id() ?? $userId,
+            'image_path' => $imagePath,
+            'status' => 'pending'
         ]);
 
         JobOrder::create([

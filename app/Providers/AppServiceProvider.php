@@ -64,10 +64,6 @@ class AppServiceProvider extends ServiceProvider
                     ->response(function () {
                         abort(429, 'Too many complaints submitted.');
                     }),
-                Limit::perMinute(3)->by('user_' . $request->user()->id)
-                    ->response(function () {
-                        abort(429, 'Too many complaints submitted.');
-                    })
             ];
         });
 

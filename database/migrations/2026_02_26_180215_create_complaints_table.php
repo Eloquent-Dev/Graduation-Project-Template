@@ -21,9 +21,6 @@ return new class extends Migration
             $table->timestamp('rejected_at')->nullable();
             $table->foreignId('rejected_by')->nullable()->constrained('employees')->onDelete('cascade');
             $table->text('rejection_reason')->nullable();
-            $table->string('complainant_name')->nullable();
-            $table->string('guest_national_no')->nullable();
-            $table->string('passport_no')->nullable();
             $table->string('latitude');
             $table->string('longitude');
             $table->text('description');

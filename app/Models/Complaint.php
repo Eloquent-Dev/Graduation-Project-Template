@@ -24,9 +24,6 @@ class Complaint extends Model
         'resolved_by',
         'closed_at',
         'closed_by',
-        'complainant_name',
-        'guest_national_no',
-        'passport_no',
         'longitude',
         'latitude',
         'description',
@@ -80,7 +77,7 @@ class Complaint extends Model
     protected static function booted(){
         static::created(function($complaint){
             $complaint->logs()->create([
-                'user_id' => auth()->id(),
+                'user_id' => auth()->id() ?? $complaint->user_id,
                 'status' => $complaint->status,
                 'title' => 'Complaint Submitted',
                 'description' => 'Your complaint has been successfully received by the system.'
