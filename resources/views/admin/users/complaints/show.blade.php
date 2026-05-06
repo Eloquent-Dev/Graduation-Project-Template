@@ -53,9 +53,18 @@
 
                     $ColorClass = $statusColors[$complaint->status] ?? 'bg-gray-100 text-gray-800 border-gray-200';
                 @endphp
-                <span class="px-4 py-2 rounded-full text-sm font-bold border shadow-sm {{ $ColorClass }}">
-                    Status: {{ str_replace('_', ' ', strtoupper($complaint->status)) }}
-                </span>
+                <div>
+                    <span class="px-4 py-2 rounded-full text-sm font-bold border shadow-sm {{ $ColorClass }}">
+                        Status: {{ str_replace('_', ' ', strtoupper($complaint->status)) }}
+                    </span>
+                    <p class="text-sm text-gray-500 mt-6">
+                        Approved at {{ $complaint->approved_at ? Carbon\Carbon::parse($complaint->approved_at)->format('F j, Y \a\t g:i A') : 'N/A' }}
+                    </p>
+                    <p class="text-sm text-gray-500 mt-6">
+                        Resolved at {{ $complaint->resolved_at ? Carbon\Carbon::parse($complaint->resolved_at)->format('F j, Y \a\t g:i A') : 'N/A' }}
+                    </p>
+                </div>
+
             </div>
             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-6 flex flex-col">
