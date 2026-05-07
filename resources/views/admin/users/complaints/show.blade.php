@@ -28,8 +28,8 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
-            <div class="p-6 border-b border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+            <div class="p-6 border-b border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <div class="mb-2">
                         <span class="text-xs font-mono bg-gray-100 text-gray-600 px-2 py-1 rounded border border-gray-200">
@@ -98,7 +98,7 @@
                 <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2 border-b pb-3">
                     <i class="fa-solid fa-list-ol text-brand-blue pl-2"></i> Complaint Lifecycle Stages
                 </h3>
-                <div class="space-y-4 pl-2">
+                <div class="space-y-4 pl-2 pr-2">
                     <div class="border border-gray-200 rounded-xl bg-white overflow-hidden shadow-sm">
                         <button @click="activeStage = activeStage === 1 ? null : 1" class="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition text-left">
                             <div class="flex items-center gap-4">
@@ -109,7 +109,7 @@
                             </div>
                             <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-200" :class="activeStage === 1 ? 'rotate-180' : ''"></i>
                         </button>
-                        <div x-show="activeStage === 1" x-transition class="p-6 border-t border-gray-100 bg-gray-50/50">
+                        <div x-show="activeStage === 1" x-transition class="p-6 border-t border-gray-200 bg-gray-50/50">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Submitted By (Citizen)</span>
@@ -132,7 +132,7 @@
                         </div>
                         <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-200" :class="activeStage === 2 ? 'rotate-180' : ''"></i>
                     </button>
-                    <div x-show="activeStage === 2" x-transition class="p-6 border-t border-gray-100 bg-gray-50/50">
+                    <div x-show="activeStage === 2" x-transition class="p-6 border-t border-gray-200 bg-gray-50/50">
                         @if($complaint->approved_at)
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
@@ -160,7 +160,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="border border-gray-200 rounded-xl bg-white overflow-hidden shadow-sm">
+                <div class="border border-gray-200 rounded-xl bg-white overflow-hidden shadow-sm ">
                     <button @click="activeStage = activeStage === 3 ? null : 3" class="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition text-left">
                         <div class="flex items-center gap-4">
                             <div class="w-8 h-8 rounded-full {{ ($complaint->jobOrders->count() > 0) ? 'bg-yellow-100 text-yellow-600 border-yellow-200' : 'bg-gray-100 text-gray-600 border-gray-200' }} flex items-center justify-center font-bold">
@@ -170,7 +170,7 @@
                         </div>
                         <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-200" :class="activeStage === 3 ? 'rotate-180' : ''"></i>
                     </button>
-                    <div x-show="activeStage === 3" x-transition class="p-6 border-t border-gray-100 bg-gray-50/50">
+                    <div x-show="activeStage === 3" x-transition class="p-6 border-t border-gray-200 bg-gray-50/50">
                         @if($complaint->jobOrders->count() > 0)
                             <div class="space-y-6">
                                 @foreach($complaint->jobOrders as $job)
@@ -203,6 +203,8 @@
                         @endif
                     </div>
                 </div>
+                <div class="pl-2 pr-2 pt-4">
+                    <div class="border-t border-gray-200 h-full absolute left-4 top-4"></div>
                 <div class="border border-gray-200 rounded-xl bg-white overflow-hidden shadow-sm ">
                     <button @click="activeStage = activeStage === 4 ? null : 4" class="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition text-left">
                         <div class="flex items-center gap-4 ">
@@ -214,24 +216,24 @@
                                     }
 
                             @endphp
-                            <div class="w-8 h-8 rounded-full  {{ $hasCompletion ? 'bg-purple-100 text-purple-600 border-purple-200' : 'bg-gray-100 text-gray-600 border-gray-200' }} flex items-center justify-center font-bold">
+                            <div class="w-8 h-8 rounded-full  {{ $hasCompletion ? 'bg-blue-100 text-blue-600 border-blue-200' : 'bg-gray-100 text-gray-600 border-gray-200' }} flex items-center justify-center font-bold">
                                 4
                             </div>
                             <h4 class="font-bold text-gray-800 ">Filed Execution & Completion</h4>
                         </div>
                         <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-200" :class="activeStage === 4 ? 'rotate-180' : ''"></i>
                     </button>
-                    <div x-show="activeStage === 4" x-transition class="p-6 border-t border-gray-100 bg-gray-50/50">
+                    <div x-show="activeStage === 4" x-transition class="p-6 border-t border-gray-200 bg-gray-50/50">
                         @if($hasCompletion)
                             <div class="space-y-6">
                                 @foreach($complaint->jobOrders as $job)
                                     @if($job->completionReport)
-                                        <div class="border border-purple-100 rounded-lg p-5 bg-white shadow-sm">
-                                            <h5 class="text-sm font-bold text-gray-700 mb-4 border-b border-purple-50 pb-2">Report for Job #{{ $job->id}}</h5>
+                                        <div class="border border-blue-100 rounded-lg p-5 bg-white shadow-sm">
+                                            <h5 class="text-sm font-bold text-gray-700 mb-4 border-b border-blue-50 pb-2">Report for Job #{{ $job->id}}</h5>
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 <div>
                                                     <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Submitted By (Supervisor)</span>
-                                                    <span class="block text-gray-800 font-medium"><i class="fa-solid fa-user-tie text-purple-500 mr-1"></i> {{ $job->completionReport->reportedBy?->user?->name ?? 'System' }}</span>
+                                                    <span class="block text-gray-800 font-medium"><i class="fa-solid fa-user-tie text-blue-500 mr-1"></i> {{ $job->completionReport->reportedBy?->user?->name ?? 'System' }}</span>
                                                 </div>
                                                 <div>
                                                     <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Report Submitted At</span>
@@ -239,7 +241,7 @@
                                                 </div>
                                                 <div class="md:col-span-2 mt-2">
                                                     @forelse ($job->workers as $worker)
-                                                        <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-md text-xs font-bold border border-purple-200">
+                                                        <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-md text-xs font-bold border border-blue-200">
                                                             <i class="fa-solid fa-wrench mr-1"></i> {{ $worker->user->name }}
                                                         </span>
                                                     @empty
@@ -248,8 +250,8 @@
                                                     </div>
                                                 </div>
                                                 @if ($job->completionReport->supervisor_comments)
-                                                <div class="md:col-span-2 mt-2 bg-purple-50 p-3 rounded-lg border border-purple-100">
-                                                    <span class="block text-xs font-bold text-purple-400 uppercase tracking-wider mb-1">Supervisor Comments</span>
+                                                <div class="md:col-span-2 mt-2 bg-blue-50 p-3 rounded-lg border border-blue-100">
+                                                    <span class="block text-xs font-bold text-blue-400 uppercase tracking-wider mb-1">Supervisor Comments</span>
                                                     <p class="text-sm text-gray-700 italic">{{ $job->completionReport->supervisor_comments }}</p>
                                                 </div>
                                                 @endif
@@ -263,7 +265,8 @@
                         @endif
                     </div>
                 </div>
-                <div class="border border-gray-200 rounded-xl bg-white overflow-hidden shadow-sm ">
+                <div class="pl-2 pr-2 pt-4"></div>
+                <div class="border border-gray-200 rounded-xl bg-white overflow-hidden shadow-sm">
                     <button @click="activeStage = activeStage === 5 ? null : 5" class="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition text-left">
                         <div class="flex items-center gap-4">
                             <div class="w-8 h-8 rounded-full {{ $complaint->resolved_at ? 'bg-green-100 text-green-600 border-green-200' : 'bg-gray-100 text-gray-600 border-gray-200' }} flex items-center justify-center font-bold border">
@@ -273,7 +276,7 @@
                         </div>
                         <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-200" :class="activeStage === 5 ? 'rotate-180' : ''"></i>
                     </button>
-                    <div x-show="activeStage === 5" x-transition class="p-6 border-t border-gray-100 bg-gray-50/50">
+                    <div x-show="activeStage === 5" x-transition class="p-6 border-t border-gray-200 bg-gray-50/50">
                         @if($complaint->resolved_at)
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
@@ -287,10 +290,10 @@
                                 <div class="md:col-span-2 mt-4 pt-4 border-t border-gray-200">
                                     <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Citizen Feedback</span>
                                     @if($complaint->feedback)
-                                    <div class="bg-white p-4 rounded-lg border border-yellow-200 shadow-sm inline-block min-w-full md:min-w-[50%]">
+                                    <div class="bg-white p-4 rounded-lg border border-yellow-200 shadow-sm inline-block min-w-full md:w-2/3 lg:w-1/2">
                                         <div class="flex items-center gap-2 mb-2">
                                             <div class="flex text-yellow-400 text-lg">
-                                                @for($i=1; $i < 5; $i++)
+                                                @for($i=1; $i <= 5; $i++)
                                                     <i class="fa-{{ $i <= $complaint->feedback->rating ? 'solid' : 'regular' }} fa-star"></i>
                                                 @endfor
                                             </div>
