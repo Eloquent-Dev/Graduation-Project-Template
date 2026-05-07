@@ -34,29 +34,31 @@ class ReportController extends Controller
         $complaints = Complaint::WhereBetween('created_at',[$startDate,$endDate])->get();
 
         $totalRecieved = $complaints->count();
-        $totalResolved = $complaints->whereIn('status',['approved','resolved'])->count();
+        $totalResolved = $complaints->where('status','resolved')->count();
+        $totalApproved = $complaints->where('status','approved')->count();
         $totalPending = $complaints->where('status','pending')->count();
         $totalInProgress = $complaints->where('status','in_progress')->count();
         $totalUnderReview = $complaints->where('status','under_review')->count();
         $totalReopened = $complaints->where('status','reopened')->count();
         $totalRejected = $complaints->where('status','rejected')->count();
 
-        $resolvedComplaints = $complaints->whereIn('status',['approved','resolved']);
+        $approvedComplaints = $complaints->where('status','approved');
         $totalHours = 0;
 
-        foreach($resolvedComplaints as $complaint){
+        foreach($approvedComplaints as $complaint){
             $completionTime = $complaint->approved_at ? Carbon::parse($complaint->approved_at) : $complaint->updated_at;
             $totalHours += $complaint->created_at->diffInHours($completionTime);
         }
 
-        $avgResolutionTime = $resolvedComplaints->count() > 0
-        ? round($totalHours / $resolvedComplaints->count(), 1)
+        $avgResolutionTime = $approvedComplaints->count() > 0
+        ? round($totalHours / $approvedComplaints->count(), 1)
         : 0;
 
         $metrics = [
             'period' => $startDate->format('M d, Y'). ' - ' . $endDate->format('M d, Y'),
             'total_received' => $totalRecieved,
             'total_resolved' => $totalResolved,
+            'total_approved' => $totalApproved,
             'total_pending' => $totalPending,
             'total_in_progress' => $totalInProgress,
             'total_under_review' => $totalUnderReview,

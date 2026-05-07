@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('image_path')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->foreignId('approved_by')->nullable()->constrained('employees')->onDelete('cascade');
+            $table->timestamp('resolved_at')->nullable();
+            $table->foreignId('resolved_by')->nullable()->constrained('employees')->onDelete('cascade');
             $table->timestamp('rejected_at')->nullable();
             $table->foreignId('rejected_by')->nullable()->constrained('employees')->onDelete('cascade');
             $table->text('rejection_reason')->nullable();

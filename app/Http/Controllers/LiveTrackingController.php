@@ -16,7 +16,7 @@ public function getTrackingData()
 {
     $jobOrders = JobOrder::has('workers')
     ->with(['workers.user','complaint'])
-    ->whereNotIn('status',['resolved','rejected'])
+    ->whereNotIn('status',['resolved','rejected','approved'])
     ->orderByRaw("
         CASE priority
         WHEN 'high' THEN 1
