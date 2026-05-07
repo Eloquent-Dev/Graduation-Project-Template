@@ -23,6 +23,7 @@ class JobOrder extends Model
         'complaint_id',
         'status',
         'priority',
+        'is_urgent'
     ];
 
     public function complaint(){

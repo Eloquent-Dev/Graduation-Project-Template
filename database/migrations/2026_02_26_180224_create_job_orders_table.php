@@ -14,15 +14,16 @@ return new class extends Migration
         Schema::create('job_orders', function (Blueprint $table) {
 
             $table->id();
-            $table->enum('status', ['pending','in_progress','approved','resolved','under_review','reopened','rejected'])->default('pending');
+            $table->enum('status', ['pending','in_progress','completed','under_review','reopened','rejected'])->default('pending');
             $table->enum('priority', ['low', 'medium', 'high'])->default('low');
+            $table->boolean('is_urgent')->default(false);
             $table->foreignId('assigned_by')->nullable()->constrained('employees')->onDelete('cascade');
             $table->timestamp('assigned_at')->nullable();
             $table->timestamp('completed_at')->nullable();
-            $table->foreignId('closed_by')->nullable()->constrained('employees')->onDelete('cascade');
-            $table->timestamp('closed_at')->nullable();
-            $table->text('closure_reason')->nullable();
-            $table->text('return_reason')->nullable();
+            // $table->foreignId('closed_by')->nullable()->constrained('employees')->onDelete('cascade');
+            // $table->timestamp('closed_at')->nullable();
+            // $table->text('closure_reason')->nullable();
+            // $table->text('return_reason')->nullable();
             $table->foreignId('complaint_id')->constrained('complaints')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
