@@ -42,6 +42,14 @@ class WorkerController extends Controller
 
         if(!$jobOrder->workers->contains($employeeId)){abort(403,'You cannot change your status when this task isnt assigned to you.');}
 
+        if(in_array($request->worker_status,['on_site','in_route'])){
+            DB::table('employee_job_order')
+            ->where('employee_id',$employeeId)
+            ->where('job_order_id', '!=', $jobOrder->id)
+            ->whereIn('worker_status',['on_site','in_route'])
+            ->update(['worker_status'=>'off_site']);
+        }
+
         $jobOrder->workers()->updateExistingPivot($employeeId, [
             'worker_status' => $request->worker_status
         ]);

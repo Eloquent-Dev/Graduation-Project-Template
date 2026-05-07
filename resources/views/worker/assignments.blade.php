@@ -13,12 +13,12 @@
         </div>
 
         @if($assignments->isEmpty())
-            <div class="bg-white p-12 rounded-xl shadow-sm border border-gray-100 max-w-2xl mx-auto mt-12 text-center">
-                <div class="w-16 h-16 bg-blue-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-mug-hot text-2xl"></i>
+            <div class="bg-gray-50 border-2 border-gray-200 rounded-xl p-12 text-center flex flex-col items-center w-full mt-6">
+                <div class="w-20 h-20 bg-white text-green-500 rounded-full flex items-center justify-center shadow-sm mb-4">
+                    <i class="fa-solid fa-mug-hot text-3xl text-gray-400"></i>
                 </div>
-                <h3 class="text-lg font-bold text-gray-800">No Active Assignments</h3>
-                <p class="text-gray-500 text-sm mt-1">You have no pending tasks. Take a break or check back later.</p>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">No Active Assignments</h3>
+                <p class="text-gray-500 max-w-md mx-auto">You have finished all your tasks. Take a coffee break until the dispatcher assigns new ones.</p>
             </div>
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
